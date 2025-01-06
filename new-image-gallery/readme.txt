@@ -3,8 +3,8 @@ Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkh
 Donate link: https://paypal.me/awplife
 Tags: image gallery, responsive gallery, portfolio gallery, wordpress photo gallery, lightbox gallery
 Requires at least: 3.0
-Tested up to: 6.6.2
-Stable tag: 1.5.4
+Tested up to: 6.7.1
+Stable tag: 1.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -171,6 +171,10 @@ The following are other recommended plugins by the author:
 11. Masonry Gallery Two Columns With Spacing & Border
 
 == Changelog ==
+
+= 1.5.5 =
+* Bug Fix: Fixed.
+* Tested plugin for wordpress 6.7.1
 
 = 1.5.4 =
 * Bug Fix: Fixed.
