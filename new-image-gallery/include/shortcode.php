@@ -142,6 +142,7 @@ function awl_image_gallery_shortcode($post_id)
 			height: auto !important;
 			border-radius: 0px;
 			/*background: transparent url('<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/img/loading.gif') ?>') center no-repeat !important;*/
+			margin-bottom: 20px !important;
 		}
 
 		<?php if ($no_spacing) { ?>

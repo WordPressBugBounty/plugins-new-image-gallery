@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, responsive gallery, portfolio gallery, wordpress photo gallery, lightbox gallery
 Requires at least: 3.0
 Tested up to: 6.7.1
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,16 +48,11 @@ The free gallery plugin is one of the most feature rich plugins out there. With 
 > #### **Demo for Lite and Pro Version**
 
 > * [Image gallery Premium](https://awplife.com/demo/image-gallery-premium/image-gallery-premium/ "Image gallery Premium")
-> * [Gallery Thumbnail Order](https://awplife.com/demo/image-gallery-premium/339-2/ "Gallery Thumbnail Order")
-> * [Image Link Url](https://awplife.com/demo/image-gallery-premium/image-link-url-2/ "Image Link Url")
 > * [Masonry Gallery](https://awplife.com/demo/image-gallery-premium/masonry-gallery-2/ "Masonry Gallery")
 > * [Blue Imp Light Box Gallery](https://awplife.com/demo/image-gallery-premium/blue-imp-light-box-gallery/ "Blue Imp Light Box Gallery")
 > * [Pop Trox Light Box Gallery](https://awplife.com/demo/image-gallery-premium/pop-trox-light-box-gallery/ "Pop Trox Light Box Gallery")
 > * [Viewer Light Box Gallery](https://awplife.com/demo/image-gallery-premium/viewer-light-box-gallery/ "Viewer Light Box Gallery")
-> * [Bootstrap 3 Light Box Gallery](https://awplife.com/demo/image-gallery-premium/bootstrap-3-light-box-gallery/ "Bootstrap 3 Light Box Gallery")
 > * [LD Light box Gallery](https://awplife.com/demo/image-gallery-premium/ld-light-box-gallery/ "LD Light box Gallery")
-> * [2D Transitions Effects](https://awplife.com/demo/image-gallery-premium/2d-transitions-effects/ "2D Transitions Effects")
-> * [Shadow and Glow Transitions Effects](https://awplife.com/demo/image-gallery-premium/shadow-and-glow-transitions-effects/ "Shadow and Glow Transitions Effects")
 > * [Hide image Spacing](https://awplife.com/demo/image-gallery-premium/hide-image-spacing/ "Hide image Spacing")
 > * [Get Premium Version](https://awplife.com/wordpress-plugins/image-gallery-premium/ "Get Premium Version")
 
@@ -171,6 +166,11 @@ The following are other recommended plugins by the author:
 11. Masonry Gallery Two Columns With Spacing & Border
 
 == Changelog ==
+
+= 1.5.6 =
+* Bug Fix: Fixed.
+* Tested plugin for wordpress 6.7.1
+* Thumbnail spacing bug fixed
 
 = 1.5.5 =
 * Bug Fix: Fixed.
