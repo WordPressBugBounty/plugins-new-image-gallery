@@ -4,7 +4,7 @@
 Plugin Name: New Image Gallery
 Plugin URI:  http://awplife.com/
 Description: The best image gallery plugin with responsive design multiple columns lightbox preview.
-Version:     1.5.6
+Version:     1.5.7
 Author:      A WP Life
 Author URI:  https://awplife.com/
 Text Domain: new-image-gallery
@@ -42,7 +42,7 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			// Plugin Version
-			define('IG_PLUGIN_VER', '1.5.6');
+			define('IG_PLUGIN_VER', '1.5.7');
 
 			// Plugin Text Domain
 			define('IGP_TXTDM', 'new-image-gallery');
