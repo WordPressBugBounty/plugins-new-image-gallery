@@ -154,11 +154,14 @@
     var imageNumber = 0;
 
     function addToAlbum($link) {
-      self.album.push({
-        link: $link.attr('href'),
-        title: $link.attr('data-title') || $link.attr('title')
-      });
-    }
+     // grab src, title and alt from the link (or its child <img>)
+     var img = $link.find('img');
+     self.album.push({
+       link:  $link.attr('href'),
+       title: $link.attr('data-title') || $link.attr('title'),
+       alt:   img.attr('alt') || ''          // ← store the original alt text
+     });
+   }
 
     // Support both data-lightbox attribute and rel attribute implementations
     var dataLightboxValue = $link.attr('data-lightbox');
@@ -229,7 +232,9 @@
       var windowHeight;
       var windowWidth;
 
-      $image.attr('src', self.album[imageNumber].link);
+      $image
+        .attr('src', self.album[imageNumber].link)
+         .attr('alt', self.album[imageNumber].alt);
 
       $preloader = $(preloader);
 

@@ -335,6 +335,18 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
             var image;
             image = $('<img />');
             image.attr('src', img.src);
+			
+			var image,
+             // grab alt from the triggering element
+              altText = _this.$element.find('img').attr('alt') 
+                        || _this.$element.data('alt') 
+                       || '';
+
+          image = $('<img />')
+           .attr('src', img.src)
+            .attr('alt', altText);   // ← set the alt on the lightbox img
+           
+			
             image.addClass('img-responsive');
             _this.lightbox_body.html(image);
             if (_this.modal_arrows) {

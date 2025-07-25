@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, responsive gallery, portfolio gallery, wordpress photo gallery, lightbox gallery
 Requires at least: 3.0
 Tested up to: 6.8.1
-Stable tag: 1.5.8
+Stable tag: 1.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -165,6 +165,10 @@ The following are other recommended plugins by the author:
 11. Masonry Gallery Two Columns With Spacing & Border
 
 == Changelog ==
+
+= 1.5.9 =
+* Added alt tag in lightbox.
+* Tested plugin for wordpress 6.8.2
 
 = 1.5.8 =
 * Bug Fix: Fixed.
