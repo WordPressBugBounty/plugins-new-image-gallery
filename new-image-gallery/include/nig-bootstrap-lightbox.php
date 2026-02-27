@@ -12,11 +12,14 @@ while ($loop->have_posts()):
 	$loop->the_post();
 
 	$post_id = esc_attr(get_the_ID());
-	// Check if the data is serialized
-	if (is_ig_serialized($decodedData)) {
+	// Retrieve the base64 encoded data
+	$encodedData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
+	// Decode the base64 encoded data
+	$decodedData = base64_decode($encodedData);
+	// Check if the data is serialized safely
+	$gallery_settings = awl_ig_safe_unserialize($decodedData);
+	if ($gallery_settings !== false) {
 
-		// The data is serialized, so unserialize it
-		$gallery_settings = unserialize($decodedData);
 		// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
 		// This step is optional but recommended to transition your data format
 
@@ -26,7 +29,6 @@ while ($loop->have_posts()):
 		// Now, to use the newly saved format, fetch and decode again
 		$encodedData = get_post_meta($image_gallery_id, 'awl_ig_settings_' . $image_gallery_id, true);
 		$gallery_settings = json_decode(($encodedData), true);
-
 	} else {
 
 		// Assume the data is in JSON format
@@ -36,7 +38,7 @@ while ($loop->have_posts()):
 	}
 	count($gallery_settings['slide-ids']);
 	// start the image gallery contents
-	?>
+?>
 	<div id="image_gallery_<?php echo esc_attr($image_gallery_id); ?>"
 		class="row all-images-<?php echo esc_attr($image_gallery_id); ?>">
 		<?php
@@ -62,10 +64,13 @@ while ($loop->have_posts()):
 				$title = $attachment_details->post_title;
 				$description = $attachment_details->post_content;
 
-				if (!empty($gallery_settings['slide-alt'][$count])) {
+				if (isset($gallery_settings['slide-alt'][$count]) && !empty($gallery_settings['slide-alt'][$count])) {
 					$image_alt = $gallery_settings['slide-alt'][$count];
 				} else {
-					$image_alt = $title;
+					$image_alt = get_post_meta($attachment_id, '_wp_attachment_image_alt', true);
+					if (empty($image_alt)) {
+						$image_alt = $title;
+					}
 				}
 
 				// set thumbnail size
@@ -81,15 +86,14 @@ while ($loop->have_posts()):
 				if ($gal_thumb_size == 'full') {
 					$thumbnail_url = $full[0];
 				}
-				?>
+		?>
 				<div
 					class="single-image-<?php echo esc_attr($image_gallery_id); ?> <?php echo esc_attr($col_large_desktops); ?> <?php echo esc_attr($col_desktops); ?> <?php echo esc_attr($col_tablets); ?> <?php echo esc_attr($col_phones); ?>">
 					<a href="<?php echo esc_url($full[0]); ?>" data-toggle="lightbox-<?php echo esc_attr($image_gallery_id); ?>"
 						data-gallery="gallery-<?php echo esc_attr($image_gallery_id); ?>"
 						data-title="<?php echo esc_html($title); ?>">
 						<img class="thumbnail <?php echo esc_attr($image_hover_effect); ?>"
-							src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_html($image_alt); ?>"
-							alt="<?php echo esc_html($title); ?>">
+							src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_html($image_alt); ?>">
 						<?php if ($img_title == 0) { ?>
 							<span class="item-title">
 								<?php echo esc_html($title); ?>
@@ -97,28 +101,28 @@ while ($loop->have_posts()):
 						<?php } ?>
 					</a>
 				</div>
-				<?php
+		<?php
 				$count++;
-			}// end of attachment foreach
+			} // end of attachment foreach
 		} else {
 			esc_html_e('Sorry! No image gallery found.', 'new-image-gallery');
 			echo ": [IMG-Gal id=" . esc_attr($post_id) . "]";
 		} // end of if else of images available check into gallery
 		?>
 	</div>
-	<?php
+<?php
 endwhile;
 wp_reset_query();
 ?>
 <script>
-	jQuery(document).ready(function () {
+	jQuery(document).ready(function() {
 		// Method 1 - Initialize Isotope, then trigger layout after each image loads.
 		var $grid = jQuery('.all-images-<?php echo esc_js($image_gallery_id); ?>').isotope({
 			// options...
 			itemSelector: '.single-image-<?php echo esc_js($image_gallery_id); ?>',
 		});
 		// layout Isotope after each image loads
-		$grid.imagesLoaded().progress(function () {
+		$grid.imagesLoaded().progress(function() {
 			$grid.isotope('layout');
 		});
 
@@ -126,8 +130,8 @@ wp_reset_query();
 			'wrapAround': <?php echo esc_js($igp_loop_st); ?>,
 		})
 	});
-	jQuery(document).ready(function (jQuery) {
-		jQuery(document).on('click', '[data-toggle="lightbox-<?php echo esc_js($image_gallery_id); ?>"]', function (event) {
+	jQuery(document).ready(function(jQuery) {
+		jQuery(document).on('click', '[data-toggle="lightbox-<?php echo esc_js($image_gallery_id); ?>"]', function(event) {
 			event.preventDefault();
 			jQuery(this).ekkoLightbox();
 		});

@@ -1,10 +1,11 @@
 <?php
+
 /**
 @package New Image Gallery
 Plugin Name: New Image Gallery
 Plugin URI:  http://awplife.com/
 Description: The best image gallery plugin with responsive design multiple columns lightbox preview.
-Version:     1.6.0
+Version:     1.6.1
 Author:      A WP Life
 Author URI:  https://awplife.com/
 Text Domain: new-image-gallery
@@ -25,6 +26,25 @@ You should have received a copy of the GNU General Public License
 along with New Image Gallery. If not, see https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html.
  */
 
+if (!function_exists('awl_ig_safe_unserialize')) {
+	function awl_ig_safe_unserialize($serialized_data)
+	{
+		if (!is_serialized($serialized_data)) {
+			return false;
+		}
+		// Prevent PHP Object Injection: Fail if serialized string contains objects (O:...)
+		if (preg_match('/(^|;)O:\d+:/', $serialized_data)) {
+			return false;
+		}
+		// PHP 7.0+ supports allowed_classes
+		if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+			return @unserialize($serialized_data, array('allowed_classes' => false));
+		} else {
+			return @unserialize($serialized_data);
+		}
+	}
+}
+
 if (!class_exists('New_Image_Gallery')) {
 
 	class New_Image_Gallery
@@ -42,7 +62,7 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			// Plugin Version
-			define('IG_PLUGIN_VER', '1.6.0');
+			define('IG_PLUGIN_VER', '1.6.1');
 
 			// Plugin Text Domain
 			define('IGP_TXTDM', 'new-image-gallery');
@@ -62,7 +82,6 @@ if (!class_exists('New_Image_Gallery')) {
 			 * @uses    NONCE_KEY     Defined in the WP root config.php
 			 */
 			define('IG_SECURE_KEY', md5(NONCE_KEY));
-
 		} // end of constructor function
 
 
@@ -108,7 +127,6 @@ if (!class_exists('New_Image_Gallery')) {
 			add_action('manage_image_gallery_posts_custom_column', array(&$this, 'custom_image_gallery_shodrcode_data'), 10, 2);
 
 			add_action('wp_enqueue_scripts', array(&$this, 'image_enqueue_scripts_in_header'));
-
 		} // end of hook function
 
 		public function image_enqueue_scripts_in_header()
@@ -232,7 +250,6 @@ if (!class_exists('New_Image_Gallery')) {
 				'capability_type' => 'page',
 			);
 			register_post_type('image_gallery', $args);
-
 		} // end of post type function
 
 		/**
@@ -275,6 +292,7 @@ if (!class_exists('New_Image_Gallery')) {
 			</style>
 			<script>
 				jQuery("#igm-copy-code").hide();
+
 				function copyToClipboard(element) {
 					var $temp = jQuery("<input>");
 					jQuery("body").append($temp);
@@ -285,13 +303,13 @@ if (!class_exists('New_Image_Gallery')) {
 					jQuery("#igm-copy-code").fadeIn();
 				}
 			</script>
-			<?php
+		<?php
 		}
 
 		// meta rate us
 		public function ig_rate_plugin()
 		{
-			?>
+		?>
 			<div style="text-align:center">
 				<p>If you like our plugin then please <b>Rate us</b> on WordPress</p>
 			</div>
@@ -308,7 +326,7 @@ if (!class_exists('New_Image_Gallery')) {
 					class="button button-primary button-large" style="background: #496481; text-shadow: none;"><span
 						class="dashicons dashicons-heart" style="line-height:1.4;"></span> Please Rate Us</a>
 			</div>
-			<?php
+		<?php
 		}
 
 		public function ig_upload_multiple_images($post)
@@ -317,7 +335,7 @@ if (!class_exists('New_Image_Gallery')) {
 			wp_enqueue_script('awl-ig-uploader.js', IG_PLUGIN_URL . 'assets/js/awl-ig-uploader.js', array('jquery'));
 			wp_enqueue_style('awl-ig-uploader-css', IG_PLUGIN_URL . 'assets/css/awl-ig-uploader.css');
 			wp_enqueue_media();
-			?>
+		?>
 			<div class="row">
 				<!--Add New Image Button-->
 				<div class="file-upload">
@@ -327,7 +345,7 @@ if (!class_exists('New_Image_Gallery')) {
 						<div class="drag-text">
 							<h3>
 								<?php esc_html_e('ADD IMAGES', 'new-image-gallery'); ?>
-								<?php wp_nonce_field( 'igp_add_images', 'igp_add_images_nonce' ); ?>
+								<?php wp_nonce_field('igp_add_images', 'igp_add_images_nonce'); ?>
 							</h3>
 						</div>
 					</div>
@@ -336,7 +354,7 @@ if (!class_exists('New_Image_Gallery')) {
 			<div style="clear:left;"></div>
 
 
-			<?php
+		<?php
 			require_once 'include/gallery-settings.php';
 		} // end of upload multiple image
 
@@ -347,7 +365,7 @@ if (!class_exists('New_Image_Gallery')) {
 			// thumb, thumbnail, medium, large, post-thumbnail
 			$thumbnail = wp_get_attachment_image_src($id, 'medium', true);
 			$attachment = get_post($id); // $id = attachment id
-			?>
+		?>
 			<li class="slide">
 				<img class="new-slide" src="<?php echo esc_url($thumbnail[0]); ?>"
 					alt="<?php echo esc_html(get_the_title($id)); ?>" style="height: 150px; width: 98%; border-radius: 8px;">
@@ -361,14 +379,14 @@ if (!class_exists('New_Image_Gallery')) {
 				<a class="pw-trash-icon" name="remove-slide" id="remove-slide" href="#"><span
 						class="dashicons dashicons-trash"></span></a>
 			</li>
-			<?php
+<?php
 		}
 
 		public function _ajax_image_gallery()
 		{
 			if (current_user_can('manage_options')) {
 				if (isset($_POST['igp_add_images_nonce']) && wp_verify_nonce($_POST['igp_add_images_nonce'], 'igp_add_images')) {
-					echo esc_attr($this->_ig_ajax_callback_function($_POST['slideId']));
+					echo $this->_ig_ajax_callback_function($_POST['slideId']);
 				} else {
 					print 'Sorry, your nonce did not verify.';
 					exit;
@@ -399,15 +417,16 @@ if (!class_exists('New_Image_Gallery')) {
 
 						$image_ids = array();
 						$image_titles = array();
+						$image_alt = array();
 
 						$image_ids_val = isset($_POST['slide-ids']) ? (array) $_POST['slide-ids'] : array();
 						$image_ids_val = array_map('sanitize_text_field', $image_ids_val);
 
 						foreach ($image_ids_val as $image_id) {
 
-							$image_ids[] = sanitize_text_field($_POST['slide-ids'][$i]);
-							$image_titles[] = sanitize_text_field($_POST['slide-title'][$i]);
-							$image_alt[] = sanitize_text_field($_POST['slide-alt'][$i]);
+							$image_ids[] = sanitize_text_field(isset($_POST['slide-ids'][$i]) ? $_POST['slide-ids'][$i] : '');
+							$image_titles[] = sanitize_text_field(isset($_POST['slide-title'][$i]) ? $_POST['slide-title'][$i] : '');
+							$image_alt[] = sanitize_text_field(isset($_POST['slide-alt'][$i]) ? $_POST['slide-alt'][$i] : '');
 
 							$single_image_update = array(
 								'ID' => $image_id,
@@ -465,7 +484,6 @@ if (!class_exists('New_Image_Gallery')) {
 		{
 			require_once 'our-theme/awp-theme.php';
 		}
-
 	} // end of class
 
 	// register sf scripts
@@ -485,7 +503,6 @@ if (!class_exists('New_Image_Gallery')) {
 
 		wp_register_style('awl-bootstrap-lightbox-css', plugin_dir_url(__FILE__) . 'include/lightbox/bootstrap/css/ekko-lightbox.css');
 		wp_register_script('awl-bootstrap-lightbox-js', plugin_dir_url(__FILE__) . 'include/lightbox/bootstrap/js/ekko-lightbox.js');
-
 	}
 	add_action('wp_enqueue_scripts', 'awplife_igp_register_scripts');
 
@@ -523,6 +540,5 @@ if (!class_exists('New_Image_Gallery')) {
 	$ig_gallery_object = new New_Image_Gallery();
 	require_once 'include/shortcode.php';
 	require_once 'class-tgm-plugin-activation.php';
-
 } // end of class exists
 ?>

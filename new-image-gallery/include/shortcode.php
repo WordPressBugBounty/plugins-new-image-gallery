@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Slider Responsive Premium Shortcode
  *
@@ -8,10 +9,6 @@
  * @return    Create Fontend Slider Output
  */
 add_shortcode('IMG-Gal', 'awl_image_gallery_shortcode');
-
-function is_ig_serialized($str) {
-    return ($str == serialize(false) || @unserialize($str) !== false);
-}
 
 function awl_image_gallery_shortcode($post_id)
 {
@@ -33,11 +30,10 @@ function awl_image_gallery_shortcode($post_id)
 	// Decode the base64 encoded data
 	$decodedData = base64_decode($encodedData);
 
-	// Check if the data is serialized
-	if (is_ig_serialized($decodedData)) {
+	// Check if the data is serialized safely
+	$gallery_settings = awl_ig_safe_unserialize($decodedData);
+	if ($gallery_settings !== false) {
 
-		// The data is serialized, so unserialize it
-		$gallery_settings = unserialize($decodedData);
 		// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
 		// This step is optional but recommended to transition your data format
 
@@ -47,7 +43,6 @@ function awl_image_gallery_shortcode($post_id)
 		// Now, to use the newly saved format, fetch and decode again
 		$encodedData = get_post_meta($image_gallery_id, 'awl_ig_settings_' . $image_gallery_id, true);
 		$gallery_settings = json_decode(($encodedData), true);
-
 	} else {
 
 		// Assume the data is in JSON format
@@ -129,7 +124,7 @@ function awl_image_gallery_shortcode($post_id)
 	} else {
 		$slide_alt = '';
 	}
-	?>
+?>
 	<!-- CSS Part Start From Here-->
 	<style>
 		.all-images {
@@ -145,55 +140,9 @@ function awl_image_gallery_shortcode($post_id)
 			margin-bottom: 20px !important;
 		}
 
-		<?php if ($no_spacing) { ?>
-			#image_gallery_<?php echo esc_html($image_gallery_id); ?> .col-xs-1,
-			.col-sm-1,
-			.col-md-1,
-			.col-lg-1,
-			.col-xs-2,
-			.col-sm-2,
-			.col-md-2,
-			.col-lg-2,
-			.col-xs-3,
-			.col-sm-3,
-			.col-md-3,
-			.col-lg-3,
-			.col-xs-4,
-			.col-sm-4,
-			.col-md-4,
-			.col-lg-4,
-			.col-xs-5,
-			.col-sm-5,
-			.col-md-5,
-			.col-lg-5,
-			.col-xs-6,
-			.col-sm-6,
-			.col-md-6,
-			.col-lg-6,
-			.col-xs-7,
-			.col-sm-7,
-			.col-md-7,
-			.col-lg-7,
-			.col-xs-8,
-			.col-sm-8,
-			.col-md-8,
-			.col-lg-8,
-			.col-xs-9,
-			.col-sm-9,
-			.col-md-9,
-			.col-lg-9,
-			.col-xs-10,
-			.col-sm-10,
-			.col-md-10,
-			.col-lg-10,
-			.col-xs-11,
-			.col-sm-11,
-			.col-md-11,
-			.col-lg-11,
-			.col-xs-12,
-			.col-sm-12,
-			.col-md-12,
-			.col-lg-12 {
+		<?php 
+		if ($no_spacing) { ?>
+			#image_gallery_<?php echo esc_html($image_gallery_id); ?> .single-image-<?php echo esc_html($image_gallery_id); ?> {
 				padding-right: 0px !important;
 				padding-left: 0px !important;
 			}
@@ -204,7 +153,8 @@ function awl_image_gallery_shortcode($post_id)
 				border: 0px !important;
 			}
 
-		<?php } ?>
+		<?php 
+		} ?>
 		.item-title {
 			background-color: rgba(0, 0, 0, 0.5);
 			bottom: 45px;
@@ -221,7 +171,7 @@ function awl_image_gallery_shortcode($post_id)
 
 		<?php echo esc_html($custom_css); ?>
 	</style>
-	<?php
+<?php
 	// load without lightbox gallery output
 	if ($light_box == 0) {
 		require 'nig-no-lightbox.php';
@@ -234,7 +184,7 @@ function awl_image_gallery_shortcode($post_id)
 	if ($light_box == 4) {
 		require 'ig-ld-lightbox.php';
 	}
-	
+
 	wp_reset_query();
 	return ob_get_clean();
 }

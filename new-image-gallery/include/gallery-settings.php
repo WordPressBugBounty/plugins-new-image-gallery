@@ -121,7 +121,7 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 			<div class="bhoechie-tab-content active">
 				<h1>
 					<?php esc_html_e('Add Images', 'new-image-gallery'); ?>
-					<?php wp_nonce_field( 'igp_add_images', 'igp_add_images_nonce' ); ?>
+					<?php wp_nonce_field('igp_add_images', 'igp_add_images_nonce'); ?>
 				</h1>
 				<hr>
 				<div id="slider-gallery">
@@ -132,33 +132,24 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						<?php
 						$post_id = esc_attr($post->ID);
 
-						if (!function_exists('is_sr_serialized')) {
-							function is_sr_serialized($str) {
-								return ($str == serialize(false) || @unserialize($str) !== false);
-							}
-						}
-
 						// Retrieve the base64 encoded data
 						$encodedData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
 
 						// Decode the base64 encoded data
 						$decodedData = base64_decode($encodedData);
 
-						// Check if the data is serialized
-						if (is_sr_serialized($decodedData)) {
-
-							// The data is serialized, so unserialize it
-							$gallery_settings = unserialize($decodedData);
+						// Check if the data is serialized safely
+						$gallery_settings = awl_ig_safe_unserialize($decodedData);
+						if ($gallery_settings !== false) {
 							// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
 							// This step is optional but recommended to transition your data format
-						
+
 							$jsonEncodedData = json_encode($gallery_settings);
 							update_post_meta($post_id, 'awl_ig_settings_' . $post_id, $jsonEncodedData);
 
 							// Now, to use the newly saved format, fetch and decode again
 							$encodedData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
 							$gallery_settings = json_decode(($encodedData), true);
-
 						} else {
 							// Assume the data is in JSON format
 							$jsonData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
@@ -168,10 +159,14 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						if (isset($gallery_settings['slide-ids'])) {
 							$count = 0;
 							foreach ($gallery_settings['slide-ids'] as $id) {
-								$image_alt = $gallery_settings['slide-alt'][$count];
+								if (isset($gallery_settings['slide-alt'][$count]) && !empty($gallery_settings['slide-alt'][$count])) {
+									$image_alt = $gallery_settings['slide-alt'][$count];
+								} else {
+									$image_alt = get_post_meta($id, '_wp_attachment_image_alt', true);
+								}
 								$thumbnail = wp_get_attachment_image_src($id, 'medium', true);
 								$attachment = get_post($id);
-								?>
+						?>
 								<li class="slide">
 									<img class="new-slide" src="<?php echo esc_url($thumbnail[0]); ?>"
 										alt="<?php echo esc_html(get_the_title($id)); ?>"
@@ -187,7 +182,7 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 									<a class="pw-trash-icon" name="remove-slide" id="remove-slide" href="#"><span
 											class="dashicons dashicons-trash"></span></a>
 								</li>
-								<?php
+						<?php
 								$count++;
 							} // end of foreach
 						} //end of if
@@ -223,31 +218,31 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						?>
 						<select id="gal_thumb_size" name="gal_thumb_size" style="width:50%">
 							<option value="thumbnail" <?php
-							if ($gal_thumb_size == 'thumbnail') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($gal_thumb_size == 'thumbnail') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('Thumbnail – 150 × 150', 'new-image-gallery'); ?>
 							</option>
 							<option value="medium" <?php
-							if ($gal_thumb_size == 'medium') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($gal_thumb_size == 'medium') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('Medium – 300 × 169', 'new-image-gallery'); ?>
 							</option>
 							<option value="large" <?php
-							if ($gal_thumb_size == 'large') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($gal_thumb_size == 'large') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('Large – 840 × 473', 'new-image-gallery'); ?>
 							</option>
 							<option value="full" <?php
-							if ($gal_thumb_size == 'full') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($gal_thumb_size == 'full') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('Full Size – 1280 × 720', 'new-image-gallery'); ?>
 							</option>
 						</select>
@@ -274,45 +269,45 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						?>
 						<select id="col_large_desktops" name="col_large_desktops" style="width:40%">
 							<option value="col-lg-12" <?php
-							if ($col_large_desktops == 'col-lg-12') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_large_desktops == 'col-lg-12') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-lg-6" <?php
-							if ($col_large_desktops == 'col-lg-6') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_large_desktops == 'col-lg-6') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-lg-4" <?php
-							if ($col_large_desktops == 'col-lg-4') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_large_desktops == 'col-lg-4') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-lg-3" <?php
-							if ($col_large_desktops == 'col-lg-3') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_large_desktops == 'col-lg-3') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-lg-2" <?php
-							if ($col_large_desktops == 'col-lg-2') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_large_desktops == 'col-lg-2') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('6 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-lg-1" <?php
-							if ($col_large_desktops == 'col-lg-1') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_large_desktops == 'col-lg-1') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('12 Column', 'new-image-gallery'); ?>
 							</option>
 						</select>
@@ -340,45 +335,45 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						?>
 						<select id="col_desktops" name="col_desktops" style="width:40%">
 							<option value="col-md-12" <?php
-							if ($col_desktops == 'col-md-12') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_desktops == 'col-md-12') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-md-6" <?php
-							if ($col_desktops == 'col-md-6') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_desktops == 'col-md-6') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-md-4" <?php
-							if ($col_desktops == 'col-md-4') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_desktops == 'col-md-4') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-md-3" <?php
-							if ($col_desktops == 'col-md-3') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_desktops == 'col-md-3') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-md-2" <?php
-							if ($col_desktops == 'col-md-2') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_desktops == 'col-md-2') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('6 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-md-1" <?php
-							if ($col_desktops == 'col-md-1') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_desktops == 'col-md-1') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('12 Column', 'new-image-gallery'); ?>
 							</option>
 						</select>
@@ -405,38 +400,38 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						?>
 						<select id="col_tablets" name="col_tablets" style="width:40%">
 							<option value="col-sm-12" <?php
-							if ($col_tablets == 'col-sm-12') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_tablets == 'col-sm-12') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-sm-6" <?php
-							if ($col_tablets == 'col-sm-12') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_tablets == 'col-sm-12') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-sm-4" <?php
-							if ($col_tablets == 'col-sm-4') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_tablets == 'col-sm-4') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-sm-3" <?php
-							if ($col_tablets == 'col-sm-3') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_tablets == 'col-sm-3') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-sm-2" <?php
-							if ($col_tablets == 'col-sm-2') {
-								echo 'selected=selected';
-							}
-							?>>
+														if ($col_tablets == 'col-sm-2') {
+															echo 'selected=selected';
+														}
+														?>>
 								<?php esc_html_e('6 Column', 'new-image-gallery'); ?>
 							</option>
 						</select>
@@ -463,31 +458,31 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						?>
 						<select id="col_phones" name="col_phones" style="width:40%">
 							<option value="col-12" <?php
-							if ($col_phones == 'col-12') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($col_phones == 'col-12') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-6" <?php
-							if ($col_phones == 'col-6') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($col_phones == 'col-6') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-4" <?php
-							if ($col_phones == 'col-4') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($col_phones == 'col-4') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
 							</option>
 							<option value="col-3" <?php
-							if ($col_phones == 'col-3') {
-								echo 'selected=selected';
-							}
-							?>>
+													if ($col_phones == 'col-3') {
+														echo 'selected=selected';
+													}
+													?>>
 								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
 							</option>
 						</select>
@@ -513,18 +508,18 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						}
 						?>
 						<input type="radio" name="img_title" id="img_title1" value="1" <?php
-						if ($img_title == 1) {
-							echo 'checked=checked';
-						}
-						?>>
+																						if ($img_title == 1) {
+																							echo 'checked=checked';
+																						}
+																						?>>
 						<label for="img_title1">
 							<?php esc_html_e('Yes', 'new-image-gallery'); ?>
 						</label>
 						<input type="radio" name="img_title" id="img_title2" value="0" <?php
-						if ($img_title == 0) {
-							echo 'checked=checked';
-						}
-						?>>
+																						if ($img_title == 0) {
+																							echo 'checked=checked';
+																						}
+																						?>>
 						<label for="img_title2">
 							<?php esc_html_e('No', 'new-image-gallery'); ?>
 						</label>
@@ -550,18 +545,18 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						}
 						?>
 						<input type="radio" name="no_spacing" id="no_spacing1" value="1" <?php
-						if ($no_spacing == 1) {
-							echo 'checked=checked';
-						}
-						?>>
+																							if ($no_spacing == 1) {
+																								echo 'checked=checked';
+																							}
+																							?>>
 						<label for="no_spacing1">
 							<?php esc_html_e('Yes', 'new-image-gallery'); ?>
 						</label>
 						<input type="radio" name="no_spacing" id="no_spacing2" value="0" <?php
-						if ($no_spacing == 0) {
-							echo 'checked=checked';
-						}
-						?>>
+																							if ($no_spacing == 0) {
+																								echo 'checked=checked';
+																							}
+																							?>>
 						<label for="no_spacing2">
 							<?php esc_html_e('No', 'new-image-gallery'); ?>
 						</label>
@@ -587,26 +582,26 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						}
 						?>
 						<input type="radio" name="thumbnail_order" id="thumbnail_order1" value="ASC" <?php
-						if ($thumbnail_order == 'ASC') {
-							echo 'checked=checked';
-						}
-						?>>
+																										if ($thumbnail_order == 'ASC') {
+																											echo 'checked=checked';
+																										}
+																										?>>
 						<label for="thumbnail_order1">
 							<?php esc_html_e('Old First', 'new-image-gallery'); ?>
 						</label>
 						<input type="radio" name="thumbnail_order" id="thumbnail_order2" value="DESC" <?php
-						if ($thumbnail_order == 'DESC') {
-							echo 'checked=checked';
-						}
-						?>>
+																										if ($thumbnail_order == 'DESC') {
+																											echo 'checked=checked';
+																										}
+																										?>>
 						<label for="thumbnail_order2">
 							<?php esc_html_e('New First', 'new-image-gallery'); ?>
 						</label>
 						<input type="radio" name="thumbnail_order" id="thumbnail_order3" value="RANDOM" <?php
-						if ($thumbnail_order == 'RANDOM') {
-							echo 'checked=checked';
-						}
-						?>>
+																										if ($thumbnail_order == 'RANDOM') {
+																											echo 'checked=checked';
+																										}
+																										?>>
 						<label for="thumbnail_order3">
 							<?php esc_html_e('Random', 'new-image-gallery'); ?>
 						</label>
@@ -632,18 +627,18 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						}
 						?>
 						<input type="radio" name="igp_loop_st" id="igp_loop_st1" value="true" <?php
-						if ($igp_loop_st == 'true') {
-							echo 'checked=checked';
-						}
-						?>>
+																								if ($igp_loop_st == 'true') {
+																									echo 'checked=checked';
+																								}
+																								?>>
 						<label for="igp_loop_st1">
 							<?php esc_html_e('Yes', 'new-image-gallery'); ?>
 						</label>
 						<input type="radio" name="igp_loop_st" id="igp_loop_st2" value="false" <?php
-						if ($igp_loop_st == 'false') {
-							echo 'checked=checked';
-						}
-						?>>
+																								if ($igp_loop_st == 'false') {
+																									echo 'checked=checked';
+																								}
+																								?>>
 						<label for="igp_loop_st2">
 							<?php esc_html_e('No', 'new-image-gallery'); ?>
 						</label>
@@ -721,38 +716,38 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 									label="<?php esc_html_e('Shadow and Glow Transitions Effects', 'new-image-gallery'); ?>"
 									class="sg">
 									<option value="hvr-grow-shadow" <?php
-									if ($image_hover_effect_four == 'hvr-grow-shadow') {
-										echo 'selected=selected';
-									}
-									?>>
+																	if ($image_hover_effect_four == 'hvr-grow-shadow') {
+																		echo 'selected=selected';
+																	}
+																	?>>
 										<?php esc_html_e('Grow Shadow', 'new-image-gallery'); ?>
 									</option>
 									<option value="hvr-float-shadow" <?php
-									if ($image_hover_effect_four == 'hvr-float-shadow') {
-										echo 'selected=selected';
-									}
-									?>>
+																		if ($image_hover_effect_four == 'hvr-float-shadow') {
+																			echo 'selected=selected';
+																		}
+																		?>>
 										<?php esc_html_e('Float Shadow', 'new-image-gallery'); ?>
 									</option>
 									<option value="hvr-glow" <?php
-									if ($image_hover_effect_four == 'hvr-glow') {
-										echo 'selected=selected';
-									}
-									?>>
+																if ($image_hover_effect_four == 'hvr-glow') {
+																	echo 'selected=selected';
+																}
+																?>>
 										<?php esc_html_e('Glow', 'new-image-gallery'); ?>
 									</option>
 									<option value="hvr-box-shadow-inset" <?php
-									if ($image_hover_effect_four == 'hvr-box-shadow-inset') {
-										echo 'selected=selected';
-									}
-									?>>
+																			if ($image_hover_effect_four == 'hvr-box-shadow-inset') {
+																				echo 'selected=selected';
+																			}
+																			?>>
 										<?php esc_html_e('Box Shadow Inset', 'new-image-gallery'); ?>
 									</option>
 									<option value="hvr-box-shadow-outset" <?php
-									if ($image_hover_effect_four == 'hvr-box-shadow-outset') {
-										echo 'selected=selected';
-									}
-									?>>
+																			if ($image_hover_effect_four == 'hvr-box-shadow-outset') {
+																				echo 'selected=selected';
+																			}
+																			?>>
 										<?php esc_html_e('Box Shadow Outset', 'new-image-gallery'); ?>
 									</option>
 								</optgroup>
@@ -789,24 +784,24 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 						?>
 						<select name="light_box" id="light_box" style="width:50%">
 							<option value="0" <?php
-							if ($light_box == 0) {
-								echo 'selected=selected';
-							}
-							?>>
+												if ($light_box == 0) {
+													echo 'selected=selected';
+												}
+												?>>
 								<?php esc_html_e('None', 'new-image-gallery'); ?>
 							</option>
 							<option value="6" <?php
-							if ($light_box == 6) {
-								echo 'selected=selected';
-							}
-							?>>
+												if ($light_box == 6) {
+													echo 'selected=selected';
+												}
+												?>>
 								<?php esc_html_e('Bootstrap Light Box', 'new-image-gallery'); ?>
 							</option>
 							<option value="4" <?php
-							if ($light_box == 4) {
-								echo 'selected=selected';
-							}
-							?>>
+												if ($light_box == 4) {
+													echo 'selected=selected';
+												}
+												?>>
 								<?php esc_html_e('LD Light Box', 'new-image-gallery'); ?>
 							</option>
 						</select>
@@ -856,8 +851,9 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 				</div>
 
 				<div class="">
-					<h1><strong>Offer:</strong> Upgrade To Premium Just In Half Price <strike>$15</strike>
-						<strong>$12</strong></h1>
+					<h1><strong>Offer:</strong> Upgrade To Premium At Discounted Price <strike>$15</strike>
+						<strong>$12</strong>
+					</h1>
 					<br>
 					<a href="https://awplife.com/demo/image-gallery-free-wordpress-plugin/" target="_blank"
 						class="button button-primary button-hero load-customize hide-if-no-customize">Check Free Plugin
@@ -868,9 +864,9 @@ wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.j
 					<a href="https://awplife.com/wordpress-plugins/image-gallery-wordpress-plugin/" target="_blank"
 						class="button button-primary button-hero load-customize hide-if-no-customize">Premium Version
 						Details</a>
-					<a href="https://awplife.com/demo/image-gallery-premium-admin-demo/" target="_blank"
-						class="button button-primary button-hero load-customize hide-if-no-customize">Try Pro
-						Version</a>
+					<a href="https://awplife.com/account/signup/image-gallery-premium" target="_blank"
+						class="button button-primary button-hero load-customize hide-if-no-customize"
+						style="margin-bottom: 10px;"><?php esc_html_e('Buy Premium Version', 'new-image-gallery'); ?></a>
 				</div>
 
 			</div>
@@ -887,8 +883,6 @@ wp_nonce_field('ig_save_settings', 'igp_save_nonce');
 <!-- Return to Top -->
 
 <script>
-
-
 	var effect_type = jQuery('input[name="image_hover_effect_type"]:checked').val();
 	//alert(effect_type);
 	if (effect_type == "no") {
@@ -899,8 +893,8 @@ wp_nonce_field('ig_save_settings', 'igp_save_nonce');
 	}
 
 	//on change effect
-	jQuery(document).ready(function () {
-		jQuery('input[name="image_hover_effect_type"]').change(function () {
+	jQuery(document).ready(function() {
+		jQuery('input[name="image_hover_effect_type"]').change(function() {
 			var effect_type = jQuery('input[name="image_hover_effect_type"]:checked').val();
 			if (effect_type == "no") {
 				jQuery('.he_four').hide();
@@ -912,7 +906,7 @@ wp_nonce_field('ig_save_settings', 'igp_save_nonce');
 	});
 
 	// tab
-	jQuery("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
+	jQuery("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
 		e.preventDefault();
 		jQuery(this).siblings('a.active').removeClass("active");
 		jQuery(this).addClass("active");
@@ -920,5 +914,4 @@ wp_nonce_field('ig_save_settings', 'igp_save_nonce');
 		jQuery("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
 		jQuery("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
 	});
-
 </script>

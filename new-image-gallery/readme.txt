@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 3.0
 Tested up to: 6.9
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,10 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Changelog ==
 
+= 1.6.1 =
+* Security Fix: Patched an Authenticated PHP Object Injection vulnerability in the settings handling to improve plugin security while maintaining backward compatibility for older gallery formats.
+* Enhancement: Completely reworked the Documentation page for better readability, clearer step-by-step instructions, and improved styling that adapts to the user's admin theme.
+
 = 1.6.0 =
 * Tested with WordPress 6.9
 
@@ -196,6 +200,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.5.4
 
 == Upgrade Notice ==
+
+= 1.6.1 =
+Security update to fix a PHP Object Injection vulnerability. Updating is highly recommended.
 
 = 1.6.0 =
 Tested with WordPress 6.9. Update recommended for compatibility.
