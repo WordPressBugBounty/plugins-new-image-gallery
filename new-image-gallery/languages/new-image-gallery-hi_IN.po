@@ -1,332 +1,527 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-04 16:41+0530\n"
-"PO-Revision-Date: 2018-08-04 16:41+0530\n"
+"Project-Id-Version: image-gallery-premium\n"
+"POT-Creation-Date: 2019-10-24 18:10+0530\n"
+"PO-Revision-Date: 2019-10-24 18:10+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: hi\n"
+"Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.3\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: .\n"
 
-#: featured-plugins/featured-plugins.php:96
-#, php-format
-msgid "%s rating"
-msgstr "%s रेटिंग"
+#: image-gallery-premium.php:35 image-gallery-premium.php:173
+#: image-gallery-premium.php:186
+msgid "Image Gallery"
+msgstr "इमेज गैलरी"
 
-#: gallery-settings.php:39
-msgid "1. Gallery Thumbnail Size"
-msgstr "1. गैलरी थंबनेल आकार"
+#: image-gallery-premium.php:120
+msgid "Shortcode"
+msgstr "शॉर्टकोड"
 
-#: gallery-settings.php:42
-msgid "Thumbnail – 150 × 150"
+#: image-gallery-premium.php:157
+msgid "Docs"
+msgstr "डॉक्स"
+
+#: image-gallery-premium.php:172
+msgid "Image Gallery Premium"
+msgstr "इमेज गैलरी प्रीमियम"
+
+#: image-gallery-premium.php:174
+msgid "Parent Item:"
+msgstr "पैरेंट आइटम:"
+
+#: image-gallery-premium.php:175
+msgid "All Image Gallery"
+msgstr "सभी इमेज गैलरी"
+
+#: image-gallery-premium.php:176
+msgid "Add New Image Gallery"
+msgstr "नई इमेज गैलरी जोड़ें"
+
+#: image-gallery-premium.php:177
+msgid "Add Image Gallery"
+msgstr "इमेज गैलरी जोड़ें"
+
+#: image-gallery-premium.php:178
+msgid "New Image Gallery"
+msgstr "नई इमेज गैलरी"
+
+#: image-gallery-premium.php:179
+msgid "Edit Image Gallery"
+msgstr "इमेज गैलरी संपादित करें"
+
+#: image-gallery-premium.php:180
+msgid "Update Image Gallery"
+msgstr "इमेज गैलरी अपडेट करें"
+
+#: image-gallery-premium.php:181
+msgid "Search Image Gallery"
+msgstr "इमेज गैलरी खोजें"
+
+#: image-gallery-premium.php:182
+msgid "Image Gallery Not found"
+msgstr "इमेज गैलरी नहीं मिली"
+
+#: image-gallery-premium.php:183
+msgid "Image Gallery Not found in Trash"
+msgstr "इमेज गैलरी कूड़ेदान में नहीं मिली"
+
+#: image-gallery-premium.php:187
+msgid "Custom Post Type For Image Gallery"
+msgstr "इमेज गैलरी के लिए कस्टम पोस्ट प्रकार"
+
+#: image-gallery-premium.php:217
+msgid "Copy Image Gallery Shortcode"
+msgstr "इमेज गैलरी शोर्ट कॉपी करें"
+
+#: image-gallery-premium.php:218
+msgid "Add Image"
+msgstr "इमेज जोड़ें"
+
+#: image-gallery-premium.php:225
+msgid "Shortcode copied to clipboard!"
+msgstr "शोर्ट क्लिपबोर्ड में कॉपी किया गया"
+
+#: image-gallery-premium.php:226
+msgid "Copy & Embed shotcode into any Page/ Post / Text Widget to display gallery."
+msgstr "गैलरी प्रदर्शित करने के लिए किसी भी पृष्ठ / पोस्ट / पाठ विजेट में कॉपी और एम्बेड शॉटकोड"
+
+#: image-gallery-premium.php:273
+msgid "ADD IMAGES"
+msgstr "छवियां जोड़ें"
+
+#: image-gallery-premium.php:292 include/gallery-settings.php:62
+msgid "Image Title"
+msgstr "इमेज टाइटल"
+
+#: image-gallery-premium.php:294 include/gallery-settings.php:64
+msgid "Image Link URL"
+msgstr "इमेज लिंक URL"
+
+#: include/gallery-settings.php:22 include/gallery-settings.php:44
+msgid "Photos"
+msgstr "फोटो"
+
+#: include/gallery-settings.php:25
+msgid "Config"
+msgstr "कॉन्फिग"
+
+#: include/gallery-settings.php:28
+msgid "LightBox"
+msgstr "लाइटबॉक्स "
+
+#: include/gallery-settings.php:31
+msgid "Hover Effects"
+msgstr "हॉवर इफ़ेक्ट"
+
+#: include/gallery-settings.php:34 include/gallery-settings.php:377
+msgid "Load More"
+msgstr "लोड मोर"
+
+#: include/gallery-settings.php:37
+msgid "Custom CSS"
+msgstr "कस्टम सीएसएस"
+
+#: include/gallery-settings.php:48
+msgid "Delete All Images"
+msgstr "सभी इमेज हटाएं"
+
+#: include/gallery-settings.php:75
+msgid "Configuration"
+msgstr "कॉन्फिग्रेशन"
+
+#: include/gallery-settings.php:82
+msgid "Gallery Thumbnail Size."
+msgstr "गैलरी थंबनेल साइज"
+
+#: include/gallery-settings.php:83
+msgid "Choose Gallery Thumbnail Size."
+msgstr "गैलरी थंबनेल साइज चुने"
+
+#: include/gallery-settings.php:90
+msgid "Thumbnail – 150 × 150."
 msgstr "थंबनेल - 150 × 150"
 
-#: gallery-settings.php:43
-msgid "Medium – 300 × 169"
-msgstr "मध्यम - 300 × 169"
+#: include/gallery-settings.php:91
+msgid "Medium – 300 × 169."
+msgstr "मीडियम – 300 × 169."
 
-#: gallery-settings.php:44
-msgid "Large – 840 × 473"
-msgstr "बड़ा - 840 × 473"
+#: include/gallery-settings.php:92
+msgid "Large – 840 × 473."
+msgstr "लार्ज - 840 × 473।"
 
-#: gallery-settings.php:45
-msgid "Full Size – 1280 × 720"
-msgstr "पूर्ण आकार - 1280 × 720"
+#: include/gallery-settings.php:93
+msgid "Full Size – 1280 × 720."
+msgstr "फुल साइज – 1280 × 720."
 
-#: gallery-settings.php:47
-msgid "Select gallery thumbnails size to display into gallery"
-msgstr "गैलरी में प्रदर्शित करने के लिए गैलरी थंबनेल आकार का चयन करें"
+#: include/gallery-settings.php:102
+msgid "Columns Layout Settings."
+msgstr "कॉलम लेआउट सेटिंग्स"
 
-#: gallery-settings.php:52
-msgid "2. Colums Layout Settings"
-msgstr "2. कॉलम लेआउट सेटिंग्स"
+#: include/gallery-settings.php:103
+msgid "Select gallery column layout for large desktop devices."
+msgstr "बड़े डेस्कटॉप उपकरणों के लिए गैलरी कॉलम लेआउट का चयन करें"
 
-#: gallery-settings.php:53
-msgid "A. Colums On Large Desktops"
-msgstr "ए: बड़े डेस्कटॉप पर ए कॉलम"
-
-#: gallery-settings.php:56 gallery-settings.php:68 gallery-settings.php:80
-#: gallery-settings.php:91
+#: include/gallery-settings.php:110 include/gallery-settings.php:132
+#: include/gallery-settings.php:154 include/gallery-settings.php:175
 msgid "1 Column"
 msgstr "1 कॉलम"
 
-#: gallery-settings.php:57 gallery-settings.php:69 gallery-settings.php:81
-#: gallery-settings.php:92
+#: include/gallery-settings.php:111 include/gallery-settings.php:133
+#: include/gallery-settings.php:155 include/gallery-settings.php:176
 msgid "2 Column"
 msgstr "2 कॉलम"
 
-#: gallery-settings.php:58 gallery-settings.php:70 gallery-settings.php:82
-#: gallery-settings.php:93
+#: include/gallery-settings.php:112 include/gallery-settings.php:134
+#: include/gallery-settings.php:156 include/gallery-settings.php:177
 msgid "3 Column"
 msgstr "3 कॉलम"
 
-#: gallery-settings.php:59 gallery-settings.php:71 gallery-settings.php:83
-#: gallery-settings.php:94
+#: include/gallery-settings.php:113 include/gallery-settings.php:135
+#: include/gallery-settings.php:157 include/gallery-settings.php:178
 msgid "4 Column"
 msgstr "4 कॉलम"
 
-#: gallery-settings.php:60 gallery-settings.php:72 gallery-settings.php:84
+#: include/gallery-settings.php:114 include/gallery-settings.php:136
+#: include/gallery-settings.php:158
 msgid "6 Column"
 msgstr "6 कॉलम"
 
-#: gallery-settings.php:61 gallery-settings.php:73
+#: include/gallery-settings.php:115 include/gallery-settings.php:137
 msgid "12 Column"
 msgstr "12 कॉलम"
 
-#: gallery-settings.php:63
-msgid "Select gallery column layout for large desktop devices"
-msgstr "बड़े डेस्कटॉप उपकरणों के लिए गैलरी कॉलम लेआउट का चयन करें"
+#: include/gallery-settings.php:124
+msgid "Columns On Desktops."
+msgstr "डेस्कटॉप पर कॉलम"
 
-#: gallery-settings.php:65
-msgid "B. Colums On Desktops"
-msgstr "ब: डेस्कटॉप पर बी कॉलम"
+#: include/gallery-settings.php:125
+msgid "Select gallery column layout for desktop devices."
+msgstr "डेस्कटॉप डिवाइस के लिए गैलरी कॉलम लेआउट का चयन करें"
 
-#: gallery-settings.php:75
-msgid "Select gallery column layout for desktop devices"
-msgstr "डेस्कटॉप उपकरणों के लिए गैलरी कॉलम लेआउट का चयन करें"
+#: include/gallery-settings.php:146
+msgid "Columns On Tablets."
+msgstr "टेबलेट पर कॉलम"
 
-#: gallery-settings.php:77
-msgid "C. Columns On Tablets"
-msgstr "स: गोलियों पर सी कॉलम"
-
-#: gallery-settings.php:86
-msgid "Select gallery column layout for tablet devices"
+#: include/gallery-settings.php:147
+msgid "Select gallery column layout for tablet devices."
 msgstr "टैबलेट उपकरणों के लिए गैलरी कॉलम लेआउट का चयन करें"
 
-#: gallery-settings.php:88
-msgid "D. Colums On Phones"
-msgstr "द: फोन पर डी कॉलम"
+#: include/gallery-settings.php:167
+msgid "Columns On Phones."
+msgstr "फ़ोनों पर कॉलम"
 
-#: gallery-settings.php:96
-msgid "Select gallery column layout for phone devices"
+#: include/gallery-settings.php:168
+msgid "Select gallery column layout for phone devices."
 msgstr "फोन उपकरणों के लिए गैलरी कॉलम लेआउट का चयन करें"
 
-#: gallery-settings.php:101
-msgid "3. Light Box Style"
-msgstr "3. लाइट बॉक्स स्टाइल"
+#: include/gallery-settings.php:188
+msgid "LightBox Configuration."
+msgstr "लाइटबॉक्स कॉन्फ़िगरेशन"
 
-#: gallery-settings.php:104 gallery-settings.php:116
+#: include/gallery-settings.php:194
+msgid "Enable Lightbox."
+msgstr "लाइटबॉक्स अनेबल करें"
+
+#: include/gallery-settings.php:195
+msgid "Select a light box style."
+msgstr "एक लाइटबॉक्स शैली का चयन करें"
+
+#: include/gallery-settings.php:203 include/gallery-settings.php:231
 msgid "None"
-msgstr "कोई नहीं"
+msgstr "None"
 
-#: gallery-settings.php:105
-msgid "Bootstrap Light Box"
-msgstr "बूटस्ट्रैप लाइट बॉक्स"
+#: include/gallery-settings.php:204
+msgid "1. Blue Imp Light Box (Image Link Not Work With This Light Box)."
+msgstr "1. ब्लू इम्प लाइट बॉक्स (इमेज लिंक इस लाइट बॉक्स के साथ काम नहीं करता है)"
 
-#: gallery-settings.php:107
-msgid "Select a light box style"
-msgstr "एक लाइट बॉक्स शैली का चयन करें"
+#: include/gallery-settings.php:205
+msgid "2. Pop Trox Light Box (Load More Not Work With This Light Box)."
+msgstr "2. पॉप ट्रॉक्स लाइट बॉक्स (इस लाइट बॉक्स के साथ लोड मोरे काम नहीं करता )"
 
-#: gallery-settings.php:112
-msgid "4. Image Hover Effect Type"
-msgstr "4. छवि होवर प्रभाव प्रकार"
+#: include/gallery-settings.php:206
+msgid "3. Viewer Light Box (Load More Not Work With This Light Box)."
+msgstr "3. व्यूअर लाइट बॉक्स (इस लाइट बॉक्स के साथ लोड मोरे काम नहीं करता)"
 
-#: gallery-settings.php:118
+#: include/gallery-settings.php:207
+msgid "4. LD Light Box."
+msgstr "4. एलडी लाइट बॉक्स"
+
+#: include/gallery-settings.php:208
+msgid "5. Bootstrap 3 Light Box."
+msgstr "5. बूटस्ट्रैप 3 लाइट बॉक्स"
+
+#: include/gallery-settings.php:218
+msgid "Hover Effects Configuration"
+msgstr "हॉवर इफ़ेक्ट कॉन्फ़िगरेशन"
+
+#: include/gallery-settings.php:223
+msgid "Image Hover Effect Type"
+msgstr "इमेज हॉवर इफ़ेक्ट प्रकार"
+
+#: include/gallery-settings.php:224 include/gallery-settings.php:245
+#: include/gallery-settings.php:291
+msgid "Select and Set a image hover effect type for gallery"
+msgstr "गैलरी के लिए एक इमेज हॉवर इफ़ेक्ट प्रकार चुनें और सेट करें"
+
+#: include/gallery-settings.php:233
 msgid "2D Transitions"
-msgstr "2 डी संक्रमण"
+msgstr "2D ट्रांजीशन"
 
-#: gallery-settings.php:120
-msgid "Select and Set a image hover effect type for Gallery"
-msgstr "गैलरी के लिए एक छवि होवर प्रभाव प्रकार का चयन करें और सेट करें"
+#: include/gallery-settings.php:235
+msgid "Shadow & Glow"
+msgstr "शैडो & ग्लो"
 
-#: gallery-settings.php:124
+#: include/gallery-settings.php:244 include/gallery-settings.php:290
 msgid "Image Hover Effects"
-msgstr "छवि होवर प्रभाव"
+msgstr "इमेज हॉवर इफ़ेक्ट"
 
-#: gallery-settings.php:127
-msgid "Shadow and Glow Transitions Effects"
-msgstr "छाया और चमक संक्रमण प्रभाव"
+#: include/gallery-settings.php:252
+msgid "Grow"
+msgstr "ग्रो"
 
-#: gallery-settings.php:128
+#: include/gallery-settings.php:253
+msgid "Shrink"
+msgstr "श्रिंक"
+
+#: include/gallery-settings.php:254
+msgid "Pulse"
+msgstr "पल्स"
+
+#: include/gallery-settings.php:255
+msgid "Pulse Grow"
+msgstr "पल्स ग्रो"
+
+#: include/gallery-settings.php:256
+msgid "Pulse Shrink"
+msgstr "पल्स श्रिंक"
+
+#: include/gallery-settings.php:257
+msgid "Push"
+msgstr "पुश"
+
+#: include/gallery-settings.php:258
+msgid "Pop"
+msgstr "पोप"
+
+#: include/gallery-settings.php:259
+msgid "Bounce In"
+msgstr "बाउंस इन"
+
+#: include/gallery-settings.php:260
+msgid "Bounce Out"
+msgstr "बाउंस आऊट"
+
+#: include/gallery-settings.php:261
+msgid "Rotate"
+msgstr "रोटेट"
+
+#: include/gallery-settings.php:262
+msgid "Grow Rotate"
+msgstr "ग्रो रोटेट"
+
+#: include/gallery-settings.php:263
+msgid "Float"
+msgstr "फ्लोट"
+
+#: include/gallery-settings.php:264
+msgid "Sink"
+msgstr "सिंक"
+
+#: include/gallery-settings.php:265
+msgid "Bob"
+msgstr "बोब"
+
+#: include/gallery-settings.php:266
+msgid "Hang"
+msgstr "हैंग"
+
+#: include/gallery-settings.php:267
+msgid "Skew"
+msgstr "स्कीव"
+
+#: include/gallery-settings.php:268
+msgid "Skew Forward"
+msgstr "स्कीव फॉरवर्ड"
+
+#: include/gallery-settings.php:269
+msgid "Skew Backward"
+msgstr "स्कीव बैकवर्ड "
+
+#: include/gallery-settings.php:270
+msgid "Wobble Horizontal"
+msgstr "वूबल होरिजेंटल"
+
+#: include/gallery-settings.php:271
+msgid "Wobble Vertical"
+msgstr "वूबल वर्टिकल"
+
+#: include/gallery-settings.php:272
+msgid "Wobble to Bottom Right"
+msgstr "वूबल टू बॉटम राइट"
+
+#: include/gallery-settings.php:273
+msgid "Wobble to Top Right"
+msgstr "वूबल टू टॉप राइट"
+
+#: include/gallery-settings.php:274
+msgid "Wobble Top"
+msgstr "वूबल टॉप"
+
+#: include/gallery-settings.php:275
+msgid "Wobble Bottom"
+msgstr "वूबल बॉटम"
+
+#: include/gallery-settings.php:276
+msgid "Wobble Skew"
+msgstr "वूबल स्कीव"
+
+#: include/gallery-settings.php:277
+msgid "Buzz"
+msgstr "बज्ज"
+
+#: include/gallery-settings.php:278
+msgid "Buzz Out"
+msgstr "बज्ज आऊट"
+
+#: include/gallery-settings.php:299
 msgid "Grow Shadow"
-msgstr "चमक छाया"
+msgstr "ग्रो शैडो"
 
-#: gallery-settings.php:129
+#: include/gallery-settings.php:300
 msgid "Float Shadow"
-msgstr "फ्लोट छाया"
+msgstr "फ्लोट शैडो"
 
-#: gallery-settings.php:130
+#: include/gallery-settings.php:301
 msgid "Glow"
-msgstr "चमक"
+msgstr "ग्लो"
 
-#: gallery-settings.php:131
-msgid "Box Shadow Inset"
-msgstr "बॉक्स छाया इन्सेट"
-
-#: gallery-settings.php:132
+#: include/gallery-settings.php:302
 msgid "Box Shadow Outset"
-msgstr "बॉक्स छाया आउटसेट"
+msgstr "बॉक्स शैडो आऊटसेट"
 
-#: gallery-settings.php:139
-msgid "5. Hide Thumbnails Spacing"
-msgstr "5. थंबनेल रिक्ति छुपाएं"
+#: include/gallery-settings.php:303
+msgid "Box Shadow Inset"
+msgstr "बॉक्स शैडो इनसेट"
 
-#: gallery-settings.php:143 gallery-settings.php:153
-msgid "Yes"
-msgstr "हाँ"
+#: include/gallery-settings.php:314
+msgid "Hide Thumbnails Spacing"
+msgstr "हाईड थंबनेल स्पेसिंग"
 
-#: gallery-settings.php:145 gallery-settings.php:155
-msgid "No"
-msgstr "नहीं"
-
-#: gallery-settings.php:147
+#: include/gallery-settings.php:315
 msgid "Hide gap / margin / padding / spacing between gallery thumbnails"
-msgstr "गैलरी थंबनेल के बीच अंतर / मार्जिन / पैडिंग / रिक्ति छुपाएं"
+msgstr "गैलरी थंबनेल के बीच अंतर / मार्जिन / पैडिंग / रिक्ति छिपाएं"
 
-#: gallery-settings.php:149
-msgid "5. Hide Thumbnails Title"
-msgstr "5. थंबनेल शीर्षक छुपाएं"
+#: include/gallery-settings.php:324 include/gallery-settings.php:391
+msgid "Yes"
+msgstr "यस"
 
-#: gallery-settings.php:160
-msgid "6. Gallery Thumbnail Order"
-msgstr "6. गैलरी थंबनेल ऑर्डर"
+#: include/gallery-settings.php:326 include/gallery-settings.php:393
+msgid "No"
+msgstr "नो"
 
-#: gallery-settings.php:164
-msgid "Old First"
-msgstr "पुराना पहला"
+#: include/gallery-settings.php:335
+msgid "Gallery Thumbnail Order"
+msgstr "गैलरी थंबनेल आर्डर"
 
-#: gallery-settings.php:166
-msgid "New First"
-msgstr "नया पहला"
-
-#: gallery-settings.php:168
-msgid "Random"
-msgstr "अव्यवस्थित"
-
-#: gallery-settings.php:169
+#: include/gallery-settings.php:336
 msgid "Set a image order in which you want to display gallery thumbnails"
-msgstr "एक छवि आदेश सेट करें जिसमें आप गैलरी थंबनेल प्रदर्शित करना चाहते हैं"
+msgstr "एक इमेज क्रम सेट करें जिसमें आप गैलरी थंबनेल दिखाना चाहते हैं"
 
-#: gallery-settings.php:173
-msgid "7. Custom CSS"
-msgstr "7. कस्टम सीएसएस"
+#: include/gallery-settings.php:344
+msgid "Old First"
+msgstr "ओल्ड फर्स्ट"
 
-#: gallery-settings.php:175
-msgid "Type direct CSS code here. Do not use <style>...</style> tag."
-msgstr "यहां सीधा सीएसएस कोड टाइप करें। <Style>...</ style> टैग का उपयोग न करें।"
+#: include/gallery-settings.php:346
+msgid "New First"
+msgstr "न्यू फर्स्ट"
 
-#: gallery-settings.php:176
+#: include/gallery-settings.php:348
+msgid "Random"
+msgstr "रैंडम"
+
+#: include/gallery-settings.php:357
+msgid "Open Image Link URL"
+msgstr "इमेज लिंक URL खोलें"
+
+#: include/gallery-settings.php:358
+msgid "Set a image URL opening target"
+msgstr "एक इमेज URL खोलने का लक्ष्य निर्धारित करें"
+
+#: include/gallery-settings.php:366
+msgid "Into New Tab"
+msgstr "नए टैब में"
+
+#: include/gallery-settings.php:368
+msgid "Into Same Tab"
+msgstr "एक ही टैब में"
+
+#: include/gallery-settings.php:383
+msgid "Load More On Gallery"
+msgstr "लोड मोर औन गैलरी"
+
+#: include/gallery-settings.php:384
+msgid "Note: Load More not work with Poptrox and Viewer Lightbox"
+msgstr "नोट: लोड मोर पॉपट्रोक्स और व्यूअर लाइटबॉक्स के साथ काम नहीं करता है"
+
+#: include/gallery-settings.php:402
+msgid "Image Limit For Load More"
+msgstr "लोड मोर के लिए इमेज सीमा"
+
+#: include/gallery-settings.php:403
+msgid "Set limit for default gallery and load more button"
+msgstr "डिफ़ॉल्ट गैलरी के लिए एक सीमा निर्धारित करें और अधिक बटन लोड करें"
+
+#: include/gallery-settings.php:417
+msgid "Text For Load More Button"
+msgstr "टेक्स्ट फॉर लोड मोर"
+
+#: include/gallery-settings.php:418
+msgid "Change Text load more button"
+msgstr "चेंज टेक्स्ट लोड मोरे बटन"
+
+#: include/gallery-settings.php:432
+msgid "Load More Button Color"
+msgstr "लोड मोरे बटन कलर"
+
+#: include/gallery-settings.php:433
+msgid "You can change color of load more button"
+msgstr "आप लोड मोरे बटन का रंग बदल सकते हैं"
+
+#: include/gallery-settings.php:447
+msgid "Load More Text Color"
+msgstr "लोड मोर टेक्स्ट कलर"
+
+#: include/gallery-settings.php:448
+msgid "You can change text color load more button"
+msgstr "यू कैन चेंज टेक्स्ट कलर लोड मोरे बटन"
+
+#: include/gallery-settings.php:464
+msgid "Custum CSS."
+msgstr "कस्टम सीएसएस"
+
+#: include/gallery-settings.php:470
+msgid "Custum CSS"
+msgstr "कस्टम सीएसएस"
+
+#: include/gallery-settings.php:471
 msgid "Apply own css on image gallery and dont use style tag"
-msgstr "छवि गैलरी पर अपने सीएसएस लागू करें और स्टाइल टैग का उपयोग न करें"
+msgstr "इमेज गैलरी पर स्वयं सीएसएस लागू करें और शैली टैग का उपयोग न करें"
 
-#: new-image-gallery.php:48 new-image-gallery.php:138 new-image-gallery.php:151
-msgid "Image Gallery"
-msgstr "छवि गैलरी"
+#: include/nig-blueimp-lightbox.php:69 include/nig-bootstrap-lightbox.php:76
+#: include/nig-bootstrap-lightbox.php:136 include/nig-ld-lightbox.php:76
+#: include/nig-ld-lightbox.php:136 include/nig-material-lightbox.php:68
+#: include/nig-no-lightbox.php:69 include/nig-no-lightbox.php:124
+#: include/nig-poptrox-lightbox.php:64 include/nig-viewer-lightbox.php:72
+msgid "Sorry! No images found in gallery."
+msgstr "क्षमा करें! गैलरी में कोई चित्र नहीं मिले"
 
-#: new-image-gallery.php:118
-msgid "Docs"
-msgstr "दस्तावेज़"
-
-#: new-image-gallery.php:119
-msgid "Upgrade Plugin"
-msgstr "प्लगइन अपग्रेड करें"
-
-#: new-image-gallery.php:120
-msgid "Our Theme"
-msgstr "हमारी थीम"
-
-#: new-image-gallery.php:124
-msgid "Featured Plugins"
-msgstr "विशेष प्लगइन्स"
-
-#: new-image-gallery.php:137 new-image-gallery.php:143
-msgid "New Image Gallery"
-msgstr "नई छवि गैलरी"
-
-#: new-image-gallery.php:139
-msgid "Parent Item:"
-msgstr "अभिभावक आइटम:"
-
-#: new-image-gallery.php:140
-msgid "All Image Gallery"
-msgstr "सभी छवि गैलरी"
-
-#: new-image-gallery.php:141
-msgid "Add New Image Gallery"
-msgstr "नई छवि गैलरी जोड़ें"
-
-#: new-image-gallery.php:142
-msgid "Add Image Gallery"
-msgstr "छवि गैलरी जोड़ें"
-
-#: new-image-gallery.php:144
-msgid "Edit Image Gallery"
-msgstr "छवि गैलरी संपादित करें"
-
-#: new-image-gallery.php:145
-msgid "Update Image Gallery"
-msgstr "छवि गैलरी अद्यतन करें"
-
-#: new-image-gallery.php:146
-msgid "Search Image Gallery"
-msgstr "छवि छवि गैलरी खोजें"
-
-#: new-image-gallery.php:147
-msgid "Image Gallery Not found"
-msgstr "छवि गैलरी नहीं मिली"
-
-#: new-image-gallery.php:148
-msgid "Image Gallery Not found in Trash"
-msgstr "छवि गैलरी ट्रैश में नहीं मिली"
-
-#: new-image-gallery.php:152
-msgid "Custom Post Type For Image Gallery"
-msgstr "छवि गैलरी के लिए कस्टम पोस्ट प्रकार"
-
-#: new-image-gallery.php:181 new-image-gallery.php:246
-msgid "Add Image"
-msgstr "छवि जोड़ें"
-
-#: new-image-gallery.php:182
-msgid "Upgrade Image Gallery Pro"
-msgstr "छवि गैलरी प्रो अपग्रेड करें"
-
-#: new-image-gallery.php:183
-msgid "Rate Our Plugin"
-msgstr "हमारे प्लगइन को रेट करें"
-
-#: new-image-gallery.php:218
-msgid "Delete All Images"
-msgstr "सभी छवियों को हटाएं"
-
-#: new-image-gallery.php:251
-msgid "Copy Image Gallery Shortcode"
-msgstr "छवि गैलरी शोर्ट कॉपी करें"
-
-#: new-image-gallery.php:254
-msgid ""
-"Copy & Embed shotcode into any Page/ Post / Text Widget to display your image "
-"gallery on site."
-msgstr ""
-"साइट पर अपनी छवि गैलरी प्रदर्शित करने के लिए किसी भी पेज / पोस्ट / टेक्स्ट विजेट में शॉटकोड कॉपी "
-"और एम्बेड करें।"
-
-#: new-image-gallery.php:259
-msgid "Image Gallery Setting"
-msgstr "छवि गैलरी सेटिंग"
-
-#: nig-bootstrap-lightbox.php:63 nig-no-lightbox.php:57
-msgid "Sorry! No image gallery found."
-msgstr "माफ़ कीजिये! कोई छवि गैलरी नहीं मिली"
-
-#~ msgid "Last Updated:"
-#~ msgstr "आखरी अपडेट:"
-
-#~ msgid "More Details"
-#~ msgstr "अधिक जानकारी"
-
-#~ msgid "Install Now"
-#~ msgstr "अभी स्थापित करें"
-
-#~ msgid "Update Now"
-#~ msgstr "अभी अद्यतन करें"
-
-#~ msgid "By"
-#~ msgstr "द्वारा"
+#~ msgid "Photos."
+#~ msgstr "फोटो"

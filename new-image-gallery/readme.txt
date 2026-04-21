@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 3.0
 Tested up to: 6.9
-Stable tag: 1.6.1
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,16 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Changelog ==
 
+= 2.0.0 =
+* Major Architecture Overhaul: Rebuilt the plugin core for better performance and modern WordPress compatibility.
+* Code Optimization: Purged legacy dependencies and redundant files to significantly reduce plugin footprint.
+* New Admin UI: Completely modernized the gallery management interface with sleeker controls and improved image handling.
+* New Feature: Added Lightbox Loop control to toggle continuous navigation in image previews.
+* Improved Performance: Introduced a custom grid system for faster page loads and better responsive behavior.
+* Security Enhancements: Hardened data handling with improved serialization safety and robust input sanitization.
+* Gutenberg Ready: Added REST API support for better integration with the Block Editor.
+* Bug Fixes: Resolved various layout issues and URL conflicts for a more stable user experience.
+
 = 1.6.1 =
 * Security Fix: Patched an Authenticated PHP Object Injection vulnerability in the settings handling to improve plugin security while maintaining backward compatibility for older gallery formats.
 * Enhancement: Completely reworked the Documentation page for better readability, clearer step-by-step instructions, and improved styling that adapts to the user's admin theme.
@@ -200,6 +210,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.5.4
 
 == Upgrade Notice ==
+
+= 2.0.0 =
+Major update with performance improvements, security hardening, and a modernized admin interface. Recommended for all users.
 
 = 1.6.1 =
 Security update to fix a PHP Object Injection vulnerability. Updating is highly recommended.

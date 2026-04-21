@@ -1,917 +1,490 @@
 <?php
-// toggle button CSS
-wp_enqueue_style('nig-admin-bootstrap-css', IG_PLUGIN_URL . 'assets/css/admin-bootstrap.css');
-wp_enqueue_style('nig-toogle-button-css', IG_PLUGIN_URL . 'assets/css/toogle-button.css');
-wp_enqueue_style('nig-metabox-css', IG_PLUGIN_URL . 'assets/css/metabox.css');
-// js
-wp_enqueue_script('jquery');
-wp_enqueue_script('nig-bootstrap-js', IG_PLUGIN_URL . 'assets/js/bootstrap.min.js', array('jquery'), '', false);
+if ( ! defined( 'ABSPATH' ) ) exit;
 
+// Enqueue Indigo CSS for the new admin layout
+wp_enqueue_style('awl-ig-admin-style-css', IG_PLUGIN_URL . 'assets/css/ig-admin-style.css', array(), IG_PLUGIN_VER);
+wp_enqueue_script('awl-ig-admin-js');
+
+
+// Extract post ID
+$post_id = esc_attr($post->ID);
+
+// Retrieves current, legacy, or default configuration
+$gallery_settings = ig_get_gallery_config($post_id);
+
+// Normalize column settings for Admin UI consistency
+$col_lg_val = ig_get_column_count($gallery_settings['col_large_desktops'], 4);
+$col_md_val = ig_get_column_count($gallery_settings['col_desktops'], 3);
+$col_sm_val = ig_get_column_count($gallery_settings['col_tablets'], 2);
+$col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 ?>
-<style>
-	.col-1,
-	.col-2,
-	.col-3,
-	.col-4,
-	.col-5,
-	.col-6,
-	.col-7,
-	.col-8,
-	.col-9,
-	.col-10,
-	.col-11,
-	.col-12,
-	.col,
-	.col-auto,
-	.col-sm-1,
-	.col-sm-2,
-	.col-sm-3,
-	.col-sm-4,
-	.col-sm-5,
-	.col-sm-6,
-	.col-sm-7,
-	.col-sm-8,
-	.col-sm-9,
-	.col-sm-10,
-	.col-sm-11,
-	.col-sm-12,
-	.col-sm,
-	.col-sm-auto,
-	.col-md-1,
-	.col-md-2,
-	.col-md-3,
-	.col-md-4,
-	.col-md-5,
-	.col-md-6,
-	.col-md-7,
-	.col-md-8,
-	.col-md-9,
-	.col-md-10,
-	.col-md-11,
-	.col-md-12,
-	.col-md,
-	.col-md-auto,
-	.col-lg-1,
-	.col-lg-2,
-	.col-lg-3,
-	.col-lg-4,
-	.col-lg-5,
-	.col-lg-6,
-	.col-lg-7,
-	.col-lg-8,
-	.col-lg-9,
-	.col-lg-10,
-	.col-lg-11,
-	.col-lg-12,
-	.col-lg,
-	.col-lg-auto,
-	.col-xl-1,
-	.col-xl-2,
-	.col-xl-3,
-	.col-xl-4,
-	.col-xl-5,
-	.col-xl-6,
-	.col-xl-7,
-	.col-xl-8,
-	.col-xl-9,
-	.col-xl-10,
-	.col-xl-11,
-	.col-xl-12,
-	.col-xl,
-	.col-xl-auto {
-		float: left;
-	}
 
-	#comment-link-box,
-	#edit-slug-box {
-		display: none;
-	}
-</style>
-<div class="row">
-	<div class="col-lg-12 bhoechie-tab-container">
-		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
-			<div class="list-group">
-				<a href="#" class="list-group-item active text-center">
-					<span class="dashicons dashicons-editor-table"></span><br />
-					<?php esc_html_e('Add Images', 'new-image-gallery'); ?>
-				</a>
-				<a href="#" class="list-group-item text-center">
-					<span class="dashicons dashicons-admin-generic"></span><br />
-					<?php esc_html_e('Configure', 'new-image-gallery'); ?>
-				</a>
-				<a href="#" class="list-group-item text-center">
-					<span class="dashicons dashicons-admin-appearance"></span><br />
-					<?php esc_html_e('Animation Effect', 'new-image-gallery'); ?>
-				</a>
-				<a href="#" class="list-group-item text-center">
-					<span class="dashicons dashicons-admin-customizer"></span><br />
-					<?php esc_html_e('LightBox Settings', 'new-image-gallery'); ?>
-				</a>
-				<a href="#" class="list-group-item text-center">
-					<span class="dashicons dashicons-editor-code"></span><br />
-					<?php esc_html_e('Custom Css', 'new-image-gallery'); ?>
-				</a>
-				<a href="#" class="list-group-item text-center">
-					<span class="dashicons dashicons-cart"></span><br />
-					<?php esc_html_e('Upgrade To Pro', 'new-image-gallery'); ?>
-				</a>
+<div class="awl-ig-settings-wrapper">
+	<!-- Navigation Tabs -->
+	<div class="awl-ig-tabs-nav">
+		<a href="#" class="nav-item active" data-target="tab-add-images">
+			<span class="dashicons dashicons-format-image"></span> <?php esc_html_e('Add Images', 'new-image-gallery'); ?>
+		</a>
+		<a href="#" class="nav-item" data-target="tab-layout-design">
+			<span class="dashicons dashicons-layout"></span> <?php esc_html_e('Layout & Design', 'new-image-gallery'); ?>
+		</a>
+		<a href="#" class="nav-item" data-target="tab-lightbox-links">
+			<span class="dashicons dashicons-welcome-view-site"></span> <?php esc_html_e('Lightbox', 'new-image-gallery'); ?>
+		</a>
+		<a href="#" class="nav-item ig-pro-tab" data-target="tab-upgrade-pro" style="color: #f59e0b; font-weight: 600;">
+			<span class="dashicons dashicons-star-filled" style="color: #f59e0b;"></span> <?php esc_html_e('Upgrade to Pro', 'new-image-gallery'); ?>
+		</a>
+
+	</div>
+
+	<!-- Content Area -->
+	<div class="awl-ig-tabs-content-wrapper">
+		
+		<!-- Tab 1: Add Images -->
+		<div class="awl-ig-tab-content active" id="tab-add-images">
+			<div class="file-upload">
+				<div class="image-upload-wrap">
+					<input class="add-new-slider file-upload-input" id="add-new-slider" name="add-new-slider"
+						value="Upload Image" />
+					<div class="drag-text">
+                        <span class="dashicons dashicons-cloud-upload" style="font-size: 40px; width: 40px; height: 40px; color: var(--ig-primary); margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;"></span>
+						<h3>
+							<?php esc_html_e('ADD IMAGES', 'new-image-gallery'); ?>
+						</h3>
+						<?php wp_nonce_field('igp_add_images', 'igp_add_images_nonce'); ?>
+					</div>
+				</div>
 			</div>
+			
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+				<div class="ig-button-group">
+					<button type="button" class="ig-btn ig-btn-secondary" onclick="return IGPSortSlides('ASC');">
+						<span class="dashicons dashicons-sort"></span> <?php esc_html_e('Ascending', 'new-image-gallery'); ?>
+					</button>
+					<button type="button" class="ig-btn ig-btn-secondary" onclick="return IGPSortSlides('DESC');">
+						<span class="dashicons dashicons-sort"></span> <?php esc_html_e('Descending', 'new-image-gallery'); ?>
+					</button>
+				</div>
+				<button type="button" id="remove-all-slides" class="ig-btn ig-btn-danger">
+					<span class="dashicons dashicons-trash"></span> <?php esc_html_e('Delete All Images', 'new-image-gallery'); ?>
+				</button>
+			</div>
+
+			<ul id="remove-slides" class="sbox igp-listitems">
+				<?php
+				if (isset($gallery_settings['slide-ids']) && is_array($gallery_settings['slide-ids'])) {
+					$count = 0;
+					foreach ($gallery_settings['slide-ids'] as $id) {
+						if (isset($gallery_settings['slide-alt'][$count]) && !empty($gallery_settings['slide-alt'][$count])) {
+							$image_alt = $gallery_settings['slide-alt'][$count];
+						} else {
+							$image_alt = get_post_meta($id, '_wp_attachment_image_alt', true);
+							if (empty($image_alt)) {
+								$image_alt = get_the_title($id);
+							}
+						}
+						$thumbnail = wp_get_attachment_image_src($id, 'medium', true);
+						$attachment = get_post($id);
+						$attachment = get_post($id);
+						?>
+						<li class="ig-image-slide" id="<?php echo esc_attr($id); ?>" data-position="<?php echo esc_attr($id); ?>">
+							<div class="ig-image-preview">
+								<div class="ig-image-controls">
+									<div class="ig-move-handle" title="<?php esc_attr_e('Drag to reorder', 'new-image-gallery'); ?>"><span class="dashicons dashicons-move"></span></div>
+									<a class="pw-trash-icon remove-slide" name="remove-slide" href="#" title="<?php esc_attr_e('Delete image', 'new-image-gallery'); ?>"><span class="dashicons dashicons-trash"></span></a>
+								</div>
+								<img src="<?php echo esc_url($thumbnail[0]); ?>" alt="<?php echo esc_html(get_the_title($id)); ?>">
+							</div>
+							<div class="ig-image-info">
+								<input type="hidden" name="slide-ids[]" value="<?php echo esc_attr($id); ?>" />
+								<input type="text" name="slide-title[]" placeholder="<?php esc_html_e('Title', 'new-image-gallery'); ?>" value="<?php echo esc_attr(get_the_title($id)); ?>">
+								<input type="text" name="slide-alt[]" placeholder="<?php esc_html_e('Alt Text', 'new-image-gallery'); ?>" value="<?php echo esc_attr($image_alt); ?>">
+
+							</div>
+						</li>
+						<?php
+						$count++;
+					}
+				}
+				?>
+			</ul>
 		</div>
-		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
-			<div class="bhoechie-tab-content active">
-				<h1>
-					<?php esc_html_e('Add Images', 'new-image-gallery'); ?>
-					<?php wp_nonce_field('igp_add_images', 'igp_add_images_nonce'); ?>
-				</h1>
-				<hr>
-				<div id="slider-gallery">
-					<input type="button" id="remove-all-slides" name="remove-all-slides"
-						class="button button-large remove-all-slides" rel=""
-						value="<?php esc_html_e('Delete All Images', 'new-image-gallery'); ?>">
-					<ul id="remove-slides" class="sbox">
-						<?php
-						$post_id = esc_attr($post->ID);
 
-						// Retrieve the base64 encoded data
-						$encodedData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
+		<!-- Tab 2: Layout & Design -->
+		<div class="awl-ig-tab-content" id="tab-layout-design">
+            
+            <!-- Group 1: Gallery Core Layout -->
+            <div class="awl-ig-card ig-card-compact">
 
-						// Decode the base64 encoded data
-						$decodedData = base64_decode($encodedData);
-
-						// Check if the data is serialized safely
-						$gallery_settings = awl_ig_safe_unserialize($decodedData);
-						if ($gallery_settings !== false) {
-							// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
-							// This step is optional but recommended to transition your data format
-
-							$jsonEncodedData = json_encode($gallery_settings);
-							update_post_meta($post_id, 'awl_ig_settings_' . $post_id, $jsonEncodedData);
-
-							// Now, to use the newly saved format, fetch and decode again
-							$encodedData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
-							$gallery_settings = json_decode(($encodedData), true);
-						} else {
-							// Assume the data is in JSON format
-							$jsonData = get_post_meta($post_id, 'awl_ig_settings_' . $post_id, true);
-							// Decode the JSON string into an associative array
-							$gallery_settings = json_decode($jsonData, true); // Ensure true is passed to get an associative array
-						}
-						if (isset($gallery_settings['slide-ids'])) {
-							$count = 0;
-							foreach ($gallery_settings['slide-ids'] as $id) {
-								if (isset($gallery_settings['slide-alt'][$count]) && !empty($gallery_settings['slide-alt'][$count])) {
-									$image_alt = $gallery_settings['slide-alt'][$count];
-								} else {
-									$image_alt = get_post_meta($id, '_wp_attachment_image_alt', true);
-								}
-								$thumbnail = wp_get_attachment_image_src($id, 'medium', true);
-								$attachment = get_post($id);
-						?>
-								<li class="slide">
-									<img class="new-slide" src="<?php echo esc_url($thumbnail[0]); ?>"
-										alt="<?php echo esc_html(get_the_title($id)); ?>"
-										style="height: 150px; width: 98%; border-radius: 8px;">
-									<input type="hidden" id="slide-ids[]" name="slide-ids[]"
-										value="<?php echo esc_attr($id); ?>" />
-									<input type="text" name="slide-title[]" id="slide-title[]" style="width: 98%;"
-										placeholder="<?php esc_html_e('Image Title', 'new-image-gallery'); ?>"
-										value="<?php echo esc_html(get_the_title($id)); ?>">
-									<input type="text" name="slide-alt[]" id="slide-alt[]" style="width: 98%;"
-										placeholder="<?php esc_html_e('Image Alt', 'new-image-gallery'); ?>"
-										value="<?php echo esc_html($image_alt); ?>">
-									<a class="pw-trash-icon" name="remove-slide" id="remove-slide" href="#"><span
-											class="dashicons dashicons-trash"></span></a>
-								</li>
-						<?php
-								$count++;
-							} // end of foreach
-						} //end of if
-						?>
-					</ul>
-				</div>
-			</div>
-
-			<div class="bhoechie-tab-content">
-				<h1>
-					<?php esc_html_e('profile settings', 'new-image-gallery'); ?>
-				</h1>
-				<hr>
-
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Gallery Thumbnail Size', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select gallery thumbnails size to display into gallery', 'new-image-gallery'); ?>
-						</p>
+				<!-- Thumbnail Size -->
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-image-filter"></span> <?php esc_html_e('Thumbnail Resolution', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Choose Thumbnail Resolution Size.', 'new-image-gallery'); ?></p>
 					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['gal_thumb_size'])) {
-							$gal_thumb_size = $gallery_settings['gal_thumb_size'];
-						} else {
-							$gal_thumb_size = 'thumbnail';
-						}
-						?>
-						<select id="gal_thumb_size" name="gal_thumb_size" style="width:50%">
-							<option value="thumbnail" <?php
-														if ($gal_thumb_size == 'thumbnail') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('Thumbnail – 150 × 150', 'new-image-gallery'); ?>
-							</option>
-							<option value="medium" <?php
-													if ($gal_thumb_size == 'medium') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('Medium – 300 × 169', 'new-image-gallery'); ?>
-							</option>
-							<option value="large" <?php
-													if ($gal_thumb_size == 'large') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('Large – 840 × 473', 'new-image-gallery'); ?>
-							</option>
-							<option value="full" <?php
-													if ($gal_thumb_size == 'full') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('Full Size – 1280 × 720', 'new-image-gallery'); ?>
-							</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Columns On Large Desktops', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select gallery column layout for large desktop devices', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['col_large_desktops'])) {
-							$col_large_desktops = $gallery_settings['col_large_desktops'];
-						} else {
-							$col_large_desktops = 'col-lg-2';
-						}
-						?>
-						<select id="col_large_desktops" name="col_large_desktops" style="width:40%">
-							<option value="col-lg-12" <?php
-														if ($col_large_desktops == 'col-lg-12') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-lg-6" <?php
-														if ($col_large_desktops == 'col-lg-6') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-lg-4" <?php
-														if ($col_large_desktops == 'col-lg-4') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-lg-3" <?php
-														if ($col_large_desktops == 'col-lg-3') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-lg-2" <?php
-														if ($col_large_desktops == 'col-lg-2') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('6 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-lg-1" <?php
-														if ($col_large_desktops == 'col-lg-1') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('12 Column', 'new-image-gallery'); ?>
-							</option>
+					<div class="awl-ig-setting-field">
+						<?php $gal_thumb_size = isset($gallery_settings['gal_thumb_size']) ? $gallery_settings['gal_thumb_size'] : "medium"; ?>
+						<select id="gal_thumb_size" name="gal_thumb_size" class="ig-select">
+							<option value="thumbnail" <?php selected($gal_thumb_size, 'thumbnail'); ?>><?php esc_html_e('Thumbnail – 150 × 150', 'new-image-gallery'); ?></option>
+							<option value="medium" <?php selected($gal_thumb_size, 'medium'); ?>><?php esc_html_e('Medium – 300 × 169', 'new-image-gallery'); ?></option>
+							<option value="large" <?php selected($gal_thumb_size, 'large'); ?>><?php esc_html_e('Large – 840 × 473', 'new-image-gallery'); ?></option>
+							<option value="full" <?php selected($gal_thumb_size, 'full'); ?>><?php esc_html_e('Full Size – Original', 'new-image-gallery'); ?></option>
 						</select>
 					</div>
 				</div>
 
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Columns On Desktops', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select gallery column layout for desktop devices', 'new-image-gallery'); ?>
-						</p>
+                <!-- Thumbnail Spacing -->
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-editor-expand"></span> <?php esc_html_e('Thumbnail Spacing (Gap)', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Adjust the pixel gap between thumbnails.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field">
+                        <?php 
+                        $no_spacing = isset($gallery_settings['no_spacing']) ? $gallery_settings['no_spacing'] : 0;
+                        ?>
+                        <div class="ig-segmented-control">
+                            <input type="radio" id="thumb_spacing_yes" name="no_spacing" value="0" <?php checked($no_spacing, 0); ?>>
+                            <label for="thumb_spacing_yes"><?php esc_html_e('Yes', 'new-image-gallery'); ?></label>
+                            
+                            <input type="radio" id="thumb_spacing_no" name="no_spacing" value="1" <?php checked($no_spacing, 1); ?>>
+                            <label for="thumb_spacing_no"><?php esc_html_e('No', 'new-image-gallery'); ?></label>
+                        </div>
 					</div>
 				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['col_desktops'])) {
-							$col_desktops = $gallery_settings['col_desktops'];
-						} else {
-							$col_desktops = 'col-md-3';
-						}
-						?>
-						<select id="col_desktops" name="col_desktops" style="width:40%">
-							<option value="col-md-12" <?php
-														if ($col_desktops == 'col-md-12') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-md-6" <?php
-														if ($col_desktops == 'col-md-6') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-md-4" <?php
-														if ($col_desktops == 'col-md-4') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-md-3" <?php
-														if ($col_desktops == 'col-md-3') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-md-2" <?php
-														if ($col_desktops == 'col-md-2') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('6 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-md-1" <?php
-														if ($col_desktops == 'col-md-1') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('12 Column', 'new-image-gallery'); ?>
-							</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Columns On Tablets', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select gallery column layout for tablet devices', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['col_tablets'])) {
-							$col_tablets = $gallery_settings['col_tablets'];
-						} else {
-							$col_tablets = 'col-sm-4';
-						}
-						?>
-						<select id="col_tablets" name="col_tablets" style="width:40%">
-							<option value="col-sm-12" <?php
-														if ($col_tablets == 'col-sm-12') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-sm-6" <?php
-														if ($col_tablets == 'col-sm-12') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-sm-4" <?php
-														if ($col_tablets == 'col-sm-4') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-sm-3" <?php
-														if ($col_tablets == 'col-sm-3') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-sm-2" <?php
-														if ($col_tablets == 'col-sm-2') {
-															echo 'selected=selected';
-														}
-														?>>
-								<?php esc_html_e('6 Column', 'new-image-gallery'); ?>
-							</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Colums On Phones', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select gallery column layout for phone devices', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['col_phones'])) {
-							$col_phones = $gallery_settings['col_phones'];
-						} else {
-							$col_phones = 'col-6';
-						}
-						?>
-						<select id="col_phones" name="col_phones" style="width:40%">
-							<option value="col-12" <?php
-													if ($col_phones == 'col-12') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('1 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-6" <?php
-													if ($col_phones == 'col-6') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('2 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-4" <?php
-													if ($col_phones == 'col-4') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('3 Column', 'new-image-gallery'); ?>
-							</option>
-							<option value="col-3" <?php
-													if ($col_phones == 'col-3') {
-														echo 'selected=selected';
-													}
-													?>>
-								<?php esc_html_e('4 Column', 'new-image-gallery'); ?>
-							</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Hide Thumbnails Title', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Hide Thumbnails Title Yes / No', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4 switch-field em_size_field">
-						<?php
-						if (isset($gallery_settings['img_title'])) {
-							$img_title = $gallery_settings['img_title'];
-						} else {
-							$img_title = 0;
-						}
-						?>
-						<input type="radio" name="img_title" id="img_title1" value="1" <?php
-																						if ($img_title == 1) {
-																							echo 'checked=checked';
-																						}
-																						?>>
-						<label for="img_title1">
-							<?php esc_html_e('Yes', 'new-image-gallery'); ?>
-						</label>
-						<input type="radio" name="img_title" id="img_title2" value="0" <?php
-																						if ($img_title == 0) {
-																							echo 'checked=checked';
-																						}
-																						?>>
-						<label for="img_title2">
-							<?php esc_html_e('No', 'new-image-gallery'); ?>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Hide Thumbnails Spacing', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Hide gap / margin / padding / spacing between gallery', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4 switch-field em_size_field">
-						<?php
-						if (isset($gallery_settings['no_spacing'])) {
-							$no_spacing = $gallery_settings['no_spacing'];
-						} else {
-							$no_spacing = 0;
-						}
-						?>
-						<input type="radio" name="no_spacing" id="no_spacing1" value="1" <?php
-																							if ($no_spacing == 1) {
-																								echo 'checked=checked';
-																							}
-																							?>>
-						<label for="no_spacing1">
-							<?php esc_html_e('Yes', 'new-image-gallery'); ?>
-						</label>
-						<input type="radio" name="no_spacing" id="no_spacing2" value="0" <?php
-																							if ($no_spacing == 0) {
-																								echo 'checked=checked';
-																							}
-																							?>>
-						<label for="no_spacing2">
-							<?php esc_html_e('No', 'new-image-gallery'); ?>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Gallery Thumbnail Order', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Set a image order in which you want to display gallery thumbnails', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4 switch-field em_size_field">
-						<?php
-						if (isset($gallery_settings['thumbnail_order'])) {
-							$thumbnail_order = $gallery_settings['thumbnail_order'];
-						} else {
-							$thumbnail_order = 'ASC';
-						}
-						?>
-						<input type="radio" name="thumbnail_order" id="thumbnail_order1" value="ASC" <?php
-																										if ($thumbnail_order == 'ASC') {
-																											echo 'checked=checked';
-																										}
-																										?>>
-						<label for="thumbnail_order1">
-							<?php esc_html_e('Old First', 'new-image-gallery'); ?>
-						</label>
-						<input type="radio" name="thumbnail_order" id="thumbnail_order2" value="DESC" <?php
-																										if ($thumbnail_order == 'DESC') {
-																											echo 'checked=checked';
-																										}
-																										?>>
-						<label for="thumbnail_order2">
-							<?php esc_html_e('New First', 'new-image-gallery'); ?>
-						</label>
-						<input type="radio" name="thumbnail_order" id="thumbnail_order3" value="RANDOM" <?php
-																										if ($thumbnail_order == 'RANDOM') {
-																											echo 'checked=checked';
-																										}
-																										?>>
-						<label for="thumbnail_order3">
-							<?php esc_html_e('Random', 'new-image-gallery'); ?>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Image Loop', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Image Looping In Lightbox True & False', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4 switch-field em_size_field">
-						<?php
-						if (isset($gallery_settings['igp_loop_st'])) {
-							$igp_loop_st = $gallery_settings['igp_loop_st'];
-						} else {
-							$igp_loop_st = 'false';
-						}
-						?>
-						<input type="radio" name="igp_loop_st" id="igp_loop_st1" value="true" <?php
-																								if ($igp_loop_st == 'true') {
-																									echo 'checked=checked';
-																								}
-																								?>>
-						<label for="igp_loop_st1">
-							<?php esc_html_e('Yes', 'new-image-gallery'); ?>
-						</label>
-						<input type="radio" name="igp_loop_st" id="igp_loop_st2" value="false" <?php
-																								if ($igp_loop_st == 'false') {
-																									echo 'checked=checked';
-																								}
-																								?>>
-						<label for="igp_loop_st2">
-							<?php esc_html_e('No', 'new-image-gallery'); ?>
-						</label>
-					</div>
-				</div>
-			</div>
 
-			<div class="bhoechie-tab-content">
-				<h1>
-					<?php esc_html_e('Image Hover Effect Type', 'new-image-gallery'); ?>
-				</h1>
-				<hr>
-
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Hover Effect Type', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select and Set a image hover effect type for Gallery', 'new-image-gallery'); ?>
-						</p>
+                <!-- Thumb Title (From Lightbox) -->
+                <div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-editor-quote"></span> <?php esc_html_e('Thumbnail Title', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Titles overlaid on thumbnails.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field">
+                        <?php $img_title = isset($gallery_settings['img_title']) ? $gallery_settings['img_title'] : 1; ?>
+                        <div class="ig-segmented-control">
+                            <input type="radio" id="img_title_yes" name="img_title" value="1" <?php checked($img_title, 1); ?>>
+                            <label for="img_title_yes"><?php esc_html_e('Yes', 'new-image-gallery'); ?></label>
+                            
+                            <input type="radio" id="img_title_no" name="img_title" value="0" <?php checked($img_title, 0); ?>>
+                            <label for="img_title_no"><?php esc_html_e('No', 'new-image-gallery'); ?></label>
+                        </div>
 					</div>
 				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4 switch-field em_size_field">
-						<?php
-						if (isset($gallery_settings['image_hover_effect_type'])) {
-							$image_hover_effect_type = $gallery_settings['image_hover_effect_type'];
-						} else {
-							$image_hover_effect_type = 'sg';
+
+
+
+
+            </div>
+
+            <!-- Group 2: Responsive Columns -->
+            <div class="awl-ig-card ig-card-compact">
+				<!-- Columns Large Desktops -->
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-desktop"></span> <?php esc_html_e('Gallery Columns on Screens', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Set columns for different device sizes.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field">
+                        <div class="ig-responsive-cols">
+                            <!-- X-Large -->
+                            <div class="ig-col-item">
+                                <label><?php esc_html_e('X-Large Screens', 'new-image-gallery'); ?></label>
+                                <select id="col_large_desktops" name="col_large_desktops" class="ig-select">
+                                    <?php foreach (array(1, 2, 3, 4, 6) as $i) : ?>
+                                        <option value="<?php echo esc_attr($i); ?>" <?php selected($col_lg_val, $i); ?>>
+                                            <?php echo ($i === 1) ? esc_html__('1 Column', 'new-image-gallery') : esc_html(sprintf(esc_html__('%d Columns', 'new-image-gallery'), (int)$i)); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- Desktop -->
+                            <div class="ig-col-item">
+                                <label><?php esc_html_e('Desktop', 'new-image-gallery'); ?></label>
+                                <select id="col_desktops" name="col_desktops" class="ig-select">
+                                    <?php foreach (array(1, 2, 3, 4, 6) as $i) : ?>
+                                        <option value="<?php echo esc_attr($i); ?>" <?php selected($col_md_val, $i); ?>>
+                                            <?php echo ($i === 1) ? esc_html__('1 Column', 'new-image-gallery') : esc_html(sprintf(esc_html__('%d Columns', 'new-image-gallery'), (int)$i)); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- Tablet -->
+                            <div class="ig-col-item">
+                                <label><?php esc_html_e('Tablet', 'new-image-gallery'); ?></label>
+                                <select id="col_tablets" name="col_tablets" class="ig-select">
+                                    <?php foreach (array(1, 2, 3, 4, 6) as $i) : ?>
+                                        <option value="<?php echo esc_attr($i); ?>" <?php selected($col_sm_val, $i); ?>>
+                                            <?php echo ($i === 1) ? esc_html__('1 Column', 'new-image-gallery') : esc_html(sprintf(esc_html__('%d Columns', 'new-image-gallery'), (int)$i)); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="ig-col-item">
+                                <label><?php esc_html_e('Phone', 'new-image-gallery'); ?></label>
+                                <select id="col_phones" name="col_phones" class="ig-select">
+                                    <?php foreach (array(1, 2, 3) as $i) : ?>
+                                        <option value="<?php echo esc_attr($i); ?>" <?php selected($col_xs_val, $i); ?>>
+                                            <?php echo ($i === 1) ? esc_html__('1 Column', 'new-image-gallery') : esc_html(sprintf(esc_html__('%d Columns', 'new-image-gallery'), (int)$i)); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+					</div>
+				</div>
+            </div>
+
+            <!-- Group 4: Image Hover Animations -->
+            <div class="awl-ig-card ig-card-compact">
+                <!-- Hover Effect Type -->
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-admin-appearance"></span> <?php esc_html_e('Hover Effect', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Choose the style for item mouseover.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field ig-flex-wrap">
+                        <?php $image_hover_effect_type = isset($gallery_settings['image_hover_effect_type']) ? $gallery_settings['image_hover_effect_type'] : "sg"; ?>
+                        <div class="ig-segmented-control">
+                            <input type="radio" id="het_sg" name="image_hover_effect_type" value="sg" <?php checked($image_hover_effect_type, 'sg'); ?>>
+                            <label for="het_sg"><?php esc_html_e('Shadows', 'new-image-gallery'); ?></label>
+
+                            <input type="radio" id="het_no" name="image_hover_effect_type" value="no" <?php checked($image_hover_effect_type, 'no'); ?>>
+                            <label for="het_no"><?php esc_html_e('None', 'new-image-gallery'); ?></label>
+                        </div>
+
+                        <div class="ig-inline-options" <?php echo ($image_hover_effect_type == 'no') ? 'style="display:none;"' : ''; ?>>
+                            <span class="ig-option-label"><?php esc_html_e('OPTION:', 'new-image-gallery'); ?></span>
+                            
+
+
+                            <!-- Shadow Glow (Overlay) -->
+                            <div class="he_four" <?php echo ($image_hover_effect_type != 'sg') ? 'style="display:none;"' : ''; ?>>
+                                <?php $image_hover_effect_four = isset($gallery_settings['image_hover_effect_four']) ? $gallery_settings['image_hover_effect_four'] : "hvr-grow-shadow"; ?>
+                                <select name="image_hover_effect_four" class="ig-select" id="image_hover_effect_four">
+                                    <option value="hvr-grow-shadow" <?php selected($image_hover_effect_four, 'hvr-grow-shadow'); ?>><?php esc_html_e('Grow Shadow', 'new-image-gallery'); ?></option>
+                                    <option value="hvr-float-shadow" <?php selected($image_hover_effect_four, 'hvr-float-shadow'); ?>><?php esc_html_e('Float Shadow', 'new-image-gallery'); ?></option>
+                                    <option value="hvr-glow" <?php selected($image_hover_effect_four, 'hvr-glow'); ?>><?php esc_html_e('Glow', 'new-image-gallery'); ?></option>
+                                    <option value="hvr-box-shadow-outset" <?php selected($image_hover_effect_four, 'hvr-box-shadow-outset'); ?>><?php esc_html_e('Box Shadow Outset', 'new-image-gallery'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+					</div>
+				</div>
+            </div>
+
+            <!-- Group 6: Logical Ordering -->
+            <div class="awl-ig-card ig-card-compact">
+                <!-- Order -->
+                <div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-sort"></span> <?php esc_html_e('Automatic Sort Order', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Set the display order for frontend thumbnails.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field">
+                        <?php $thumbnail_order = isset($gallery_settings['thumbnail_order']) ? $gallery_settings['thumbnail_order'] : "ASC"; ?>
+                        <div class="ig-segmented-control">
+                            <input type="radio" id="order_asc" name="thumbnail_order" value="ASC" <?php checked($thumbnail_order, 'ASC'); ?>>
+                            <label for="order_asc"><?php esc_html_e('Oldest First', 'new-image-gallery'); ?></label>
+                            
+                            <input type="radio" id="order_desc" name="thumbnail_order" value="DESC" <?php checked($thumbnail_order, 'DESC'); ?>>
+                            <label for="order_desc"><?php esc_html_e('Newest First', 'new-image-gallery'); ?></label>
+                            
+                            <input type="radio" id="order_rnd" name="thumbnail_order" value="RANDOM" <?php checked($thumbnail_order, 'RANDOM'); ?>>
+                            <label for="order_rnd"><?php esc_html_e('Random', 'new-image-gallery'); ?></label>
+                        </div>
+					</div>
+				</div>
+            </div>
+		</div>
+
+		<!-- Tab 3: Lightbox -->
+		<div class="awl-ig-tab-content" id="tab-lightbox-links">
+            <div class="awl-ig-card ig-card-compact">
+				<!-- Lightbox Script -->
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-visibility"></span> <?php esc_html_e('Active Lightbox Script', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Select the script core for the image popup.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field">
+						<?php 
+						$light_box = isset($gallery_settings['light-box']) ? (int)$gallery_settings['light-box'] : 1;
+						if ($light_box != 0) {
+						    $light_box = 1;
 						}
 						?>
-						<input type="radio" name="image_hover_effect_type" id="image_hover_effect_type1" value="no"
-							<?php
-							if ($image_hover_effect_type == 'no') {
-								echo 'checked=checked';
-							}
-							?>>
-						<label for="image_hover_effect_type1">
-							<?php esc_html_e('None', 'new-image-gallery'); ?>
-						</label>
-						<input type="radio" name="image_hover_effect_type" id="image_hover_effect_type2" value="sg"
-							<?php
-							if ($image_hover_effect_type == 'sg') {
-								echo 'checked=checked';
-							}
-							?>>
-						<label for="image_hover_effect_type2">
-							<?php esc_html_e('2D Transitions', 'new-image-gallery'); ?>
-						</label>
+						<select name="light-box" id="light-box" class="ig-select">
+							<option value="0" <?php selected($light_box, 0); ?>><?php esc_html_e('None (Disable Popup)', 'new-image-gallery'); ?></option>
+							<option value="1" <?php selected($light_box, 1); ?>><?php esc_html_e('LD Lightbox', 'new-image-gallery'); ?></option>
+						</select>
 					</div>
 				</div>
-				<div class="he_four">
-					<div class="col-md-4">
-						<div class="ma_field_discription">
-							<h6>
-								<?php esc_html_e('Image Hover Effects', 'new-image-gallery'); ?>
-							</h6>
-							<p>
-								<?php esc_html_e('Select and Set a image hover effect type for Gallery', 'new-image-gallery'); ?>
-							</p>
-						</div>
+
+
+
+				<!-- Loop Images in Lightbox -->
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-update"></span> <?php esc_html_e('Loop Images in Lightbox', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('Allow navigation to restart from the beginning after the last image.', 'new-image-gallery'); ?></p>
 					</div>
-					<div class="col-md-8">
-						<div class="ma_field p-4">
-							<?php
-							if (isset($gallery_settings['image_hover_effect_four'])) {
-								$image_hover_effect_four = $gallery_settings['image_hover_effect_four'];
-							} else {
-								$image_hover_effect_four = 'hvr-glow';
-							}
-							?>
-							<select name="image_hover_effect_four" id="image_hover_effect_four" style="width:40%">
-								<optgroup
-									label="<?php esc_html_e('Shadow and Glow Transitions Effects', 'new-image-gallery'); ?>"
-									class="sg">
-									<option value="hvr-grow-shadow" <?php
-																	if ($image_hover_effect_four == 'hvr-grow-shadow') {
-																		echo 'selected=selected';
-																	}
-																	?>>
-										<?php esc_html_e('Grow Shadow', 'new-image-gallery'); ?>
-									</option>
-									<option value="hvr-float-shadow" <?php
-																		if ($image_hover_effect_four == 'hvr-float-shadow') {
-																			echo 'selected=selected';
-																		}
-																		?>>
-										<?php esc_html_e('Float Shadow', 'new-image-gallery'); ?>
-									</option>
-									<option value="hvr-glow" <?php
-																if ($image_hover_effect_four == 'hvr-glow') {
-																	echo 'selected=selected';
-																}
-																?>>
-										<?php esc_html_e('Glow', 'new-image-gallery'); ?>
-									</option>
-									<option value="hvr-box-shadow-inset" <?php
-																			if ($image_hover_effect_four == 'hvr-box-shadow-inset') {
-																				echo 'selected=selected';
-																			}
-																			?>>
-										<?php esc_html_e('Box Shadow Inset', 'new-image-gallery'); ?>
-									</option>
-									<option value="hvr-box-shadow-outset" <?php
-																			if ($image_hover_effect_four == 'hvr-box-shadow-outset') {
-																				echo 'selected=selected';
-																			}
-																			?>>
-										<?php esc_html_e('Box Shadow Outset', 'new-image-gallery'); ?>
-									</option>
-								</optgroup>
-							</select>
+					<div class="awl-ig-setting-field">
+						<div class="ig-segmented-control">
+							<input type="radio" id="lb_loop_yes" name="show_lightbox_loop" value="1" <?php checked($gallery_settings['show_lightbox_loop'], 1); ?>>
+							<label for="lb_loop_yes"><?php esc_html_e('Yes', 'new-image-gallery'); ?></label>
+							
+							<input type="radio" id="lb_loop_no" name="show_lightbox_loop" value="0" <?php checked($gallery_settings['show_lightbox_loop'], 0); ?>>
+							<label for="lb_loop_no"><?php esc_html_e('No', 'new-image-gallery'); ?></label>
 						</div>
 					</div>
 				</div>
-			</div>
+                
+                
 
-			<div class="bhoechie-tab-content">
-				<h1>
-					<?php esc_html_e('Light Box Style', 'new-image-gallery'); ?>
-				</h1>
-				<hr>
 
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Light Box', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Select a light box style', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['light_box'])) {
-							$light_box = $gallery_settings['light_box'];
-						} else {
-							$light_box = 4;
-						}
-						?>
-						<select name="light_box" id="light_box" style="width:50%">
-							<option value="0" <?php
-												if ($light_box == 0) {
-													echo 'selected=selected';
-												}
-												?>>
-								<?php esc_html_e('None', 'new-image-gallery'); ?>
-							</option>
-							<option value="6" <?php
-												if ($light_box == 6) {
-													echo 'selected=selected';
-												}
-												?>>
-								<?php esc_html_e('Bootstrap Light Box', 'new-image-gallery'); ?>
-							</option>
-							<option value="4" <?php
-												if ($light_box == 4) {
-													echo 'selected=selected';
-												}
-												?>>
-								<?php esc_html_e('LD Light Box', 'new-image-gallery'); ?>
-							</option>
-						</select>
-					</div>
-				</div>
-			</div>
-
-			<div class="bhoechie-tab-content">
-				<h1>
-					<?php esc_html_e('Custom CSS', 'new-image-gallery'); ?>
-				</h1>
-				<hr>
-
-				<div class="col-md-4">
-					<div class="ma_field_discription">
-						<h6>
-							<?php esc_html_e('Custom CSS', 'new-image-gallery'); ?>
-						</h6>
-						<p>
-							<?php esc_html_e('Apply own CSS on image gallery and do not use style tag', 'new-image-gallery'); ?>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="ma_field p-4">
-						<?php
-						if (isset($gallery_settings['custom-css'])) {
-							$custom_css = $gallery_settings['custom-css'];
-						} else {
-							$custom_css = '';
-						}
-						?>
-						<textarea name="custom-css" id="custom-css" style="width: 100%; height: 120px;"
-							placeholder="<?php esc_html_e('Type direct CSS code here. Do not use <style>...</style> tag.', 'new-image-gallery'); ?>"><?php echo esc_html($custom_css); ?></textarea>
-					</div>
-				</div>
-			</div>
-
-			<div class="bhoechie-tab-content">
-				<h1>
-					<?php esc_html_e('Upgrade To Pro', 'new-image-gallery'); ?>
-				</h1>
-				<hr>
-				<!--Grid-->
-				<div class="" style="padding-left: 10px;">
-					<p class="ms-title">Upgrade To Premium For Unloack More Features & Settings</p>
-				</div>
-
-				<div class="">
-					<h1><strong>Offer:</strong> Upgrade To Premium At Discounted Price <strike>$15</strike>
-						<strong>$12</strong>
-					</h1>
-					<br>
-					<a href="https://awplife.com/demo/image-gallery-free-wordpress-plugin/" target="_blank"
-						class="button button-primary button-hero load-customize hide-if-no-customize">Check Free Plugin
-						Demo</a>
-					<a href="https://awplife.com/demo/image-gallery-premium/" target="_blank"
-						class="button button-primary button-hero load-customize hide-if-no-customize">Check Pro Plugin
-						Demo</a>
-					<a href="https://awplife.com/wordpress-plugins/image-gallery-wordpress-plugin/" target="_blank"
-						class="button button-primary button-hero load-customize hide-if-no-customize">Premium Version
-						Details</a>
-					<a href="https://awplife.com/account/signup/image-gallery-premium" target="_blank"
-						class="button button-primary button-hero load-customize hide-if-no-customize"
-						style="margin-bottom: 10px;"><?php esc_html_e('Buy Premium Version', 'new-image-gallery'); ?></a>
-				</div>
-
-			</div>
-
+            </div>
 		</div>
+
+		<!-- Tab 4: Upgrade to Pro -->
+		<div class="awl-ig-tab-content" id="tab-upgrade-pro">
+			<div class="ig-pro-upgrade-container">
+				<!-- Header section -->
+				<div class="ig-pro-header">
+					<div class="ig-pro-badge"><?php esc_html_e('PREMIUM FEATURES', 'new-image-gallery'); ?></div>
+					<h2><?php esc_html_e('Experience the Best with Pro Version', 'new-image-gallery'); ?></h2>
+					<p><?php esc_html_e('Take your image galleries to the next level with advanced features, powerful tools, and priority support.', 'new-image-gallery'); ?></p>
+					
+					<!-- Top Buy Button -->
+					<div class="ig-pro-top-cta" style="margin-top: 25px; text-align: center;">
+						<a href="https://awplife.com/wordpress-plugins/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-premium lg">
+							<span class="dashicons dashicons-cart"></span> <?php esc_html_e('Get the Pro Version Now', 'new-image-gallery'); ?>
+						</a>
+					</div>
+				</div>
+
+				<!-- Feature Grid -->
+				<div class="ig-pro-grid">
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-admin-page"></span></div>
+						<h3><?php esc_html_e('Duplicate Gallery', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Clone any gallery instantly with its settings and images. Perfect for repetitive layouts.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-clock"></span></div>
+						<h3><?php esc_html_e('AJAX Load More', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Enhance performance with high-speed AJAX pagination, featuring stunning professional button presets.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-layout"></span></div>
+						<h3><?php esc_html_e('Premium Grid & Circle Layout', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Transform your gallery into a unique circular grid with professional spacing controls.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-desktop"></span></div>
+						<h3><?php esc_html_e('8-Column Ultra-Wide Support', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Unlock the missing 5, 7, and 8 column options for perfect balance on high-resolution and ultra-wide displays.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-forms"></span></div>
+						<h3><?php esc_html_e('Advanced Border & Spacing Control', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Customize border thickness, Color and spacing, glassmorphism card effect.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-align-center"></span></div>
+						<h3><?php esc_html_e('Flexible Title Positioning', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Choose where to display image titles: precisely over the hover overlay or clearly below the image card.', 'new-image-gallery'); ?></p>
+					</div>
+				</div>
+
+				<!-- Comparison Table -->
+				<div class="ig-pro-comparison">
+					<h3><?php esc_html_e('Compare Versions', 'new-image-gallery'); ?></h3>
+					<table class="ig-comparison-table">
+						<thead>
+							<tr>
+								<th><?php esc_html_e('Feature', 'new-image-gallery'); ?></th>
+								<th><?php esc_html_e('Free Version', 'new-image-gallery'); ?></th>
+								<th><?php esc_html_e('Pro Version', 'new-image-gallery'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><?php esc_html_e('Available Columns', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('1, 2, 3, 4, 6 Columns', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('1, 2, 3, 4, 5, 6, 7, 8 Columns', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Layout Modes', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('Masonry', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('Masonry, Grid, Circle', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('AJAX Load More', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Duplicate Gallery', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							
+							<tr>
+								<td><?php esc_html_e('Advanced Border & Spacing Control', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Image Order', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Image Hover Effects', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('Basic', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('Advance', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Lightbox Scripts', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('1 Type', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('6 Types', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Lightbox Image', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Lightbox Image Description', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Title Positioning', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('On Image only', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('Hover & Below Image', 'new-image-gallery'); ?></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Footer CTA -->
+				<div class="ig-pro-cta">
+					<a href="https://awplife.com/wordpress-plugins/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-premium lg">
+						<span class="dashicons dashicons-cart"></span> <?php esc_html_e('Grab Image Gallery Pro Now!', 'new-image-gallery'); ?>
+					</a>
+					<p><?php esc_html_e('One-time payment. Lifetime updates. 100% Satisfaction.', 'new-image-gallery'); ?></p>
+				</div>
+			</div>
+		</div>
+
+
+
 	</div>
 </div>
 
-<?php
-// syntax: wp_nonce_field( 'name_of_my_action', 'name_of_nonce_field' );
-wp_nonce_field('ig_save_settings', 'igp_save_nonce');
-?>
-
-<!-- Return to Top -->
-
-<script>
-	var effect_type = jQuery('input[name="image_hover_effect_type"]:checked').val();
-	//alert(effect_type);
-	if (effect_type == "no") {
-		jQuery('.he_four').hide();
-	}
-	if (effect_type == "sg") {
-		jQuery('.he_four').show();
-	}
-
-	//on change effect
-	jQuery(document).ready(function() {
-		jQuery('input[name="image_hover_effect_type"]').change(function() {
-			var effect_type = jQuery('input[name="image_hover_effect_type"]:checked').val();
-			if (effect_type == "no") {
-				jQuery('.he_four').hide();
-			}
-			if (effect_type == "sg") {
-				jQuery('.he_four').show();
-			}
-		});
-	});
-
-	// tab
-	jQuery("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
-		e.preventDefault();
-		jQuery(this).siblings('a.active').removeClass("active");
-		jQuery(this).addClass("active");
-		var index = jQuery(this).index();
-		jQuery("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
-		jQuery("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
-	});
-</script>
+<?php wp_nonce_field('ig_save_settings', 'igp_save_nonce'); ?>

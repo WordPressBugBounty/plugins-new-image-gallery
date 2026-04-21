@@ -1,0 +1,220 @@
+/**
+ * Image Gallery — Modern Grid & Design System
+ * Replaces legacy Flexbox with high-performance CSS Grid and Variables.
+ */
+
+:root {
+    --ig-primary: #4f46e5;
+    --ig-white: #ffffff;
+    --ig-radius: 12px;
+    --ig-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --ig-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --ig-glass: rgba(255, 255, 255, 0.05);
+    
+    /* Variables injected via Shortcode */
+    --ig-gutter: 20px;
+    --ig-cols-lg: 4;
+    --ig-cols-md: 3;
+    --ig-cols-sm: 2;
+    --ig-cols-xs: 1;
+    --ig-overlay-color: rgba(0,0,0,0.7);
+    --ig-text-color: #ffffff;
+    --ig-title-bg: transparent;
+    --ig-title-font-size: 16px;
+}
+
+/* Base Responsive Logic for Gutters */
+@media (max-width: 575px) {
+    :root {
+        --ig-gutter: 10px !important;
+    }
+}
+
+/* Grid Configuration & Variable Scaling */
+.ig-row {
+    display: block;
+    position: relative; /* Positioning context for Isotope */
+    --ig-cols-current: var(--ig-cols-xs, 1);
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+
+/* Breakpoint Scaling - Industry Standard Intervals */
+@media (min-width: 576px)  { .ig-row { --ig-cols-current: var(--ig-cols-sm, 2); } }
+@media (min-width: 768px)  { .ig-row { --ig-cols-current: var(--ig-cols-md, 3); } }
+@media (min-width: 992px)  { .ig-row { --ig-cols-current: var(--ig-cols-lg, 4); } }
+@media (min-width: 1200px) { .ig-row { --ig-cols-current: var(--ig-cols-lg, 4); } }
+
+/* Base Column & Grid Sizer - Using Clean Widths */
+.ig-col, .grid-sizer {
+    width: calc(100% / var(--ig-cols-current));
+    box-sizing: border-box;
+}
+
+.ig-col {
+    padding: calc(var(--ig-gutter, 20px) / 2);
+    /* No transitions on positioning properties to prevent Isotope lag */
+}
+
+/* Image Card */
+.ig-image-card {
+    position: relative;
+    border-radius: var(--ig-radius);
+    background: transparent;
+    transition: var(--ig-transition);
+    will-change: transform;
+}
+/*
+.ig-image-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--ig-shadow);
+    z-index: 5;
+}*/
+
+/*
+.ig-image-card.ig-has-card-border:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12); 
+} */
+
+/* Card Border logic */
+.ig-image-card.ig-has-card-border {
+    padding: var(--ig-card-padding, 12px);
+    background: #ffffff66;
+    border: 1px solid #e1e1e1;
+    border-radius: var(--ig-card-radius, var(--ig-radius));
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08); /* Sophisticated card shadow */
+}
+
+.ig-image-card.ig-has-card-border .ig-image-container {
+    border-radius: calc(var(--ig-card-radius, var(--ig-radius)) - 4px); /* Proportional internal rounding */
+}
+
+.ig-image-container {
+    position: relative;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--ig-radius);
+}
+
+.ig-thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: var(--ig-transition);
+}
+
+/* Hover Effects Logic */
+.ig-hover-zoom:hover .ig-thumbnail { transform: scale(1.1); }
+.ig-hover-grayscale .ig-thumbnail { filter: grayscale(100%); }
+.ig-hover-grayscale:hover .ig-thumbnail { filter: grayscale(0%); }
+.ig-hover-blur:hover .ig-thumbnail { filter: blur(4px); }
+
+/* Overlay Design */
+/* Overlay Positioning & Variants */
+.ig-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    transition: var(--ig-transition);
+    pointer-events: none;
+    display: flex;
+    z-index: 2;
+}
+
+/* Bottom Bar Overlay (Standard for Free) */
+.ig-overlay-bottom {
+    align-items: flex-end;
+    background: transparent;
+    transform: translateY(0);
+}
+
+.ig-overlay-bottom .ig-item-title {
+    background: var(--ig-overlay-color, rgba(0,0,0,0.6));
+    padding: 8px;
+    text-align: center;
+    margin: 0;
+    display: block;
+}
+
+/* Typography for Layout Titles */
+.ig-item-title {
+    color: var(--ig-text-color);
+    background: var(--ig-title-bg);
+    font-size: var(--ig-title-font-size);
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    display: block;
+    width: 100%;
+}
+
+/* Entry Animation */
+@keyframes igFadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.single-image {
+    animation: igFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Cleanup */
+.text-center { text-align: center; }
+.ig-image-card a { text-decoration: none !important; color: inherit; }
+
+/* ========================================
+   Optimized Hover Effects (Ported from hover.css)
+   ======================================== */
+.hvr-glow, .hvr-grow-shadow, .hvr-box-shadow-outset, .hvr-float-shadow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.hvr-glow { transition-property: box-shadow; }
+.hvr-glow:hover { box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); }
+
+.hvr-grow-shadow { transition-property: box-shadow, transform; }
+.hvr-grow-shadow:hover { 
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5); 
+    -webkit-transform: scale(1.1); 
+    transform: scale(1.1); 
+}
+
+.hvr-box-shadow-outset { transition-property: box-shadow; }
+.hvr-box-shadow-outset:hover { box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6); }
+
+.hvr-float-shadow { position: relative; transition-property: transform; }
+.hvr-float-shadow:before {
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    content: '';
+    top: 100%;
+    left: 5%;
+    height: 10px;
+    width: 90%;
+    opacity: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform, opacity;
+    transition-property: transform, opacity;
+}
+.hvr-float-shadow:hover { -webkit-transform: translateY(-5px); transform: translateY(-5px); }
+.hvr-float-shadow:hover:before { 
+    opacity: 1; 
+    -webkit-transform: translateY(5px); 
+    transform: translateY(5px); 
+}

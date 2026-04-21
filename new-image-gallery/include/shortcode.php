@@ -1,191 +1,99 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Slider Responsive Premium Shortcode
+ * Image Gallery Shortcode
  *
  * @access    public
  * @since     3.0
  *
- * @return    Create Fontend Slider Output
+ * @return    Create Fontend Gallery Output
  */
 add_shortcode('IMG-Gal', 'awl_image_gallery_shortcode');
 
 function awl_image_gallery_shortcode($post_id)
 {
 	ob_start();
-	// js
-	wp_enqueue_script('awl-ig-bootstrap-js');
+	//js
+	//wp_enqueue_script('jquery');
+	wp_enqueue_script('awl-ig-hash-guard-js');
 	wp_enqueue_script('awl-imagesloaded-pkgd-js');
 	wp_enqueue_script('awl-ig-isotope-js');
+	wp_enqueue_script('awl-ig-frontend-js');
+	wp_enqueue_style('awl-ig-frontend-grid-css');
 
-	// awp custom bootstrap css
-	wp_enqueue_style('awl-bootstrap-css');
 
 	$image_gallery_id = esc_attr($post_id['id']);
+	$gallery_settings = ig_get_gallery_config($image_gallery_id);
+
+	// Normalization for CSS Variables
+
+	$col_lg           = ig_get_column_count($gallery_settings['col_large_desktops'], 4);
+	$col_md           = ig_get_column_count($gallery_settings['col_desktops'], 3);
+	$col_sm           = ig_get_column_count($gallery_settings['col_tablets'], 2);
+	$col_xs           = ig_get_column_count($gallery_settings['col_phones'], 1);
+	
+	$no_spacing       = isset($gallery_settings['no_spacing']) ? (int)$gallery_settings['no_spacing'] : 0;
+	$spacing_val      = ($no_spacing == 0) ? 8 : 0;
+	$gutter           = $spacing_val . 'px';
+	$light_box        = (int)$gallery_settings['light-box'];
+	$thumbnail_order  = $gallery_settings['thumbnail_order'];
 
 
-	// Retrieve the base64 encoded data
-	$encodedData = get_post_meta($image_gallery_id, 'awl_ig_settings_' . $image_gallery_id, true);
+	// Layout Mode
+	$layout_class = 'ig-layout-masonry';
 
-	// Decode the base64 encoded data
-	$decodedData = base64_decode($encodedData);
+	// Hover Effect Logic
+	$hover_type       = $gallery_settings['image_hover_effect_type'];
 
-	// Check if the data is serialized safely
-	$gallery_settings = awl_ig_safe_unserialize($decodedData);
-	if ($gallery_settings !== false) {
-
-		// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
-		// This step is optional but recommended to transition your data format
-
-		$jsonEncodedData = json_encode($gallery_settings);
-		update_post_meta($image_gallery_id, 'awl_ig_settings_' . $image_gallery_id, $jsonEncodedData);
-
-		// Now, to use the newly saved format, fetch and decode again
-		$encodedData = get_post_meta($image_gallery_id, 'awl_ig_settings_' . $image_gallery_id, true);
-		$gallery_settings = json_decode(($encodedData), true);
-	} else {
-
-		// Assume the data is in JSON format
-		$jsonData = get_post_meta($image_gallery_id, 'awl_ig_settings_' . $image_gallery_id, true);
-		// Decode the JSON string into an associative array
-		$gallery_settings = json_decode($jsonData, true); // Ensure true is passed to get an associative array
-	}
-
-	// print_r($gallery_settings);
-
-	$image_gallery_id = $post_id['id'];
-
-	// columns settings
-	$gal_thumb_size = $gallery_settings['gal_thumb_size'];
-	$col_large_desktops = $gallery_settings['col_large_desktops'];
-	$col_desktops = $gallery_settings['col_desktops'];
-	$col_tablets = $gallery_settings['col_tablets'];
-	$col_phones = $gallery_settings['col_phones'];
-
-	// ligtbox style
-	if (isset($gallery_settings['light_box'])) {
-		$light_box = $gallery_settings['light_box'];
-	} else {
-		$light_box = 4;
-	}
-
-	// hover effect
-	if (isset($gallery_settings['image_hover_effect_type'])) {
-		$image_hover_effect_type = $gallery_settings['image_hover_effect_type'];
-	} else {
-		$image_hover_effect_type = 'no';
-	}
-	if ($image_hover_effect_type == 'no') {
-		$image_hover_effect = '';
-	} else {
-		// hover csss
-		wp_enqueue_style('ggp-hover-css', IG_PLUGIN_URL . 'assets/css/hover.css');
-	}
-	if ($image_hover_effect_type == 'sg') {
-		if (isset($gallery_settings['image_hover_effect_four'])) {
-			$image_hover_effect = $gallery_settings['image_hover_effect_four'];
-		} else {
-			$image_hover_effect = 'hvr-box-shadow-outset';
-		}
-	}
-
-	if (isset($gallery_settings['no_spacing'])) {
-		$no_spacing = $gallery_settings['no_spacing'];
-	} else {
-		$no_spacing = 0;
-	}
-	if (isset($gallery_settings['thumbnail_order'])) {
-		$thumbnail_order = $gallery_settings['thumbnail_order'];
-	} else {
-		$thumbnail_order = 'ASC';
-	}
-	if (isset($gallery_settings['url_target'])) {
-		$url_target = $gallery_settings['url_target'];
-	} else {
-		$url_target = '_new';
-	}
-	if (isset($gallery_settings['custom-css'])) {
-		$custom_css = $gallery_settings['custom-css'];
-	} else {
-		$custom_css = '';
-	}
-	if (isset($gallery_settings['img_title'])) {
-		$img_title = $gallery_settings['img_title'];
-	} else {
-		$img_title = 0;
-	}
-	if (isset($gallery_settings['igp_loop_st'])) {
-		$igp_loop_st = $gallery_settings['igp_loop_st'];
-	} else {
-		$igp_loop_st = 'false';
-	}
-	if (isset($gallery_settings['slide-alt'])) {
-		$slide_alt = $gallery_settings['slide-alt'];
-	} else {
-		$slide_alt = '';
-	}
 ?>
-	<!-- CSS Part Start From Here-->
+	<!-- Gallery Engine Assets -->
 	<style>
-		.all-images {
-			padding-top: 10px !important;
-			padding-bottom: 15px !important;
-		}
+		#image_gallery_wrap_<?php echo esc_attr($image_gallery_id); ?> {
+            --ig-gutter: <?php echo esc_attr($gutter); ?>;
+            --ig-cols-lg: <?php echo esc_attr($col_lg); ?>;
+            --ig-cols-md: <?php echo esc_attr($col_md); ?>;
+            --ig-cols-sm: <?php echo esc_attr($col_sm); ?>;
+            --ig-cols-xs: <?php echo esc_attr($col_xs); ?>;
+            
+            /* Dynamic Border Variables */
+            <?php 
+            $b_radius = $spacing_val;
+            $b_thickness = $spacing_val;
+            
 
-		#image_gallery_<?php echo esc_html($image_gallery_id); ?> .thumbnail {
-			width: 100% !important;
-			height: auto !important;
-			border-radius: 0px;
-			/*background: transparent url('<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/img/loading.gif') ?>') center no-repeat !important;*/
-			margin-bottom: 20px !important;
-		}
+            ?>
+            --ig-radius: <?php echo esc_attr($b_radius); ?>px;
+            --ig-card-radius: <?php echo esc_attr($b_radius); ?>px;
+            --ig-card-padding: <?php echo esc_attr($b_thickness); ?>px;
 
-		<?php 
-		if ($no_spacing) { ?>
-			#image_gallery_<?php echo esc_html($image_gallery_id); ?> .single-image-<?php echo esc_html($image_gallery_id); ?> {
-				padding-right: 0px !important;
-				padding-left: 0px !important;
-			}
 
-			#image_gallery_<?php echo esc_html($image_gallery_id); ?> .thumbnail {
-				padding: 0px !important;
-				margin-bottom: 0px !important;
-				border: 0px !important;
-			}
-
-		<?php 
-		} ?>
-		.item-title {
-			background-color: rgba(0, 0, 0, 0.5);
-			bottom: 45px;
-			color: #FFFFFF;
-			display: block;
-			font-weight: 300;
-			left: 2rem;
-			padding: 8px;
-			position: absolute;
-			right: 2rem;
-			text-align: center;
-			text-transform: capitalize;
-		}
-
-		<?php echo esc_html($custom_css); ?>
+        }
 	</style>
+    <?php 
+    $wrapper_classes = array('ig-gallery-outer-wrap', $layout_class);
+    $wrapper_classes = apply_filters('ig_gallery_wrapper_class', $wrapper_classes, $image_gallery_id);
+    ?>
+    <div id="image_gallery_wrap_<?php echo esc_attr($image_gallery_id); ?>" 
+        class="<?php echo esc_attr(implode(' ', $wrapper_classes)); ?>" 
+        data-layout="masonry" 
+        data-lb-loop="<?php echo (isset($gallery_settings['show_lightbox_loop']) ? (int)$gallery_settings['show_lightbox_loop'] : 1); ?>" 
+        data-lb-label="<?php esc_attr_e('Image %1 of %2', 'new-image-gallery'); ?>"
+        data-version="<?php echo esc_attr(IG_PLUGIN_VER); ?>">
+
 <?php
 	// load without lightbox gallery output
 	if ($light_box == 0) {
-		require 'nig-no-lightbox.php';
+		require(plugin_dir_path(__FILE__) . 'common-loop.php');
+	}
+	// load ld lightbox gallery output
+	if ($light_box != 0) {
+		require(plugin_dir_path(__FILE__) . 'nig-ld-lightbox.php');
 	}
 
-	// load bootstrap 3 lightbox gallery output
-	if ($light_box == 6) {
-		require 'nig-bootstrap-lightbox.php';
-	}
-	if ($light_box == 4) {
-		require 'ig-ld-lightbox.php';
-	}
 
-	wp_reset_query();
+    ?>
+    </div><?php
 	return ob_get_clean();
 }
 ?>
