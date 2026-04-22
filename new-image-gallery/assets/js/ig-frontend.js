@@ -20,6 +20,10 @@ jQuery(document).ready(function ($) {
         // Handle Layout after images load
         $grid.imagesLoaded().done(function () {
             $grid.isotope('layout');
+            // Fade in the gallery once everything is positioned
+            setTimeout(function() {
+                $grid.addClass('ig-loaded');
+            }, 100);
         }).progress(function () {
             $grid.isotope('layout');
         });

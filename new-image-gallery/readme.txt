@@ -2,9 +2,9 @@
 Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkhan007, sharikkhan007, zishlife, FARAZFRANK
 Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
-Requires at least: 3.0
+Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,11 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Changelog ==
 
+= 2.0.1=
+* Improved Page Load: Fixed an issue where images would stack vertically or overlap before the gallery layout was fully initialized.
+* Enhanced UX: Added a smooth fade-in effect to the gallery once all images are ready and positioned.
+* Layout Fallback: Added a CSS-based grid fallback to maintain structure even if JavaScript execution is delayed.
+
 = 2.0.0 =
 * Major Architecture Overhaul: Rebuilt the plugin core for better performance and modern WordPress compatibility.
 * Code Optimization: Purged legacy dependencies and redundant files to significantly reduce plugin footprint.
@@ -192,24 +197,14 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.7.1
 
 = 1.5.4 =
+* Added new image hover effects
 * Bug fixes
 * Tested with WordPress 6.6.2
 
-= 1.5.3 =
-* Fixed gallery settings page bug
-* Tested with WordPress 6.6.2
-
-= 1.5.2 =
-* Tested with WordPress 6.6.1
-
-= 1.5.1 =
-* Updated Bootstrap library
-* Tested with WordPress 6.5.5
-
-= 1.5.0 =
-* Tested with WordPress 6.5.4
-
 == Upgrade Notice ==
+
+= 2.0.1 =
+Fixed frontend image stacking issues and improved initial page load performance with a smoother fade-in transition.
 
 = 2.0.0 =
 Major update with performance improvements, security hardening, and a modernized admin interface. Recommended for all users.
