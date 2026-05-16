@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,12 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Changelog ==
 
+= 2.0.2 =
+* Date: 16 May 2026
+* Fixed "Thumbnail Title" setting not saving in the gallery configuration.
+* Fixed "Random Order" functionality by removing deterministic random seeding.
+* Improved default settings consistency across admin UI and frontend display.
+
 = 2.0.1=
 * Improved Page Load: Fixed an issue where images would stack vertically or overlap before the gallery layout was fully initialized.
 * Enhanced UX: Added a smooth fade-in effect to the gallery once all images are ready and positioned.
@@ -202,6 +208,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.6.2
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+Fixed issues with Thumbnail Title saving and Random Order functionality. Recommended for all users.
 
 = 2.0.1 =
 Fixed frontend image stacking issues and improved initial page load performance with a smoother fade-in transition.

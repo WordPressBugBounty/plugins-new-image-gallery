@@ -19,7 +19,6 @@ if (isset($gallery_settings['slide-ids']) && is_array($gallery_settings['slide-i
     if ($thumbnail_order == "DESC") {
         $ordered_slides = array_reverse($ordered_slides);
     } elseif ($thumbnail_order == "RANDOM") {
-        srand($rand_seed); // Deterministic shuffle
         shuffle($ordered_slides);
     }
 

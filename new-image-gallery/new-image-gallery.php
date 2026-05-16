@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 Plugin Name: Image Gallery
 Plugin URI: http://awplife.com/
 Description: A Responsive Simple Beautiful Easy Powerful WordPress Gallery Plugin With Masonry Layout.
-Version: 2.0.1
+Version: 2.0.2
 Author: A WP Life
 Author URI: http://awplife.com/
 License: GPLv2 or later
@@ -81,7 +81,7 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			//Plugin Version
-			define('IG_PLUGIN_VER', '2.0.1');
+			define('IG_PLUGIN_VER', '2.0.2');
 
 			//Plugin Slug
 			define('IG_PLUGIN_SLUG', 'image_gallery');
@@ -394,12 +394,12 @@ if (!class_exists('New_Image_Gallery')) {
 						$col_desktops        = isset($_POST['col_desktops']) ? sanitize_text_field(wp_unslash($_POST['col_desktops'])) : "3";
 						$col_tablets         = isset($_POST['col_tablets']) ? sanitize_text_field(wp_unslash($_POST['col_tablets'])) : "2";
 						$col_phones          = isset($_POST['col_phones']) ? sanitize_text_field(wp_unslash($_POST['col_phones'])) : "1";
-						$img_title           = isset($_POST['img_title']) ? sanitize_text_field(wp_unslash($_POST['img_title'])) : "title";
+						$img_title           = isset($_POST['img_title']) ? sanitize_text_field(wp_unslash($_POST['img_title'])) : "1";
 						$no_spacing         = isset($_POST['no_spacing']) ? sanitize_text_field(wp_unslash($_POST['no_spacing'])) : "0";
-                        $thumbnail_order     = isset($_POST['thumbnail_order']) ? sanitize_text_field(wp_unslash($_POST['thumbnail_order'])) : "ASC";
-						$image_hover_effect_type = isset($_POST['image_hover_effect_type']) ? sanitize_text_field(wp_unslash($_POST['image_hover_effect_type'])) : "none";
-						$image_hover_effect_four = isset($_POST['image_hover_effect_four']) ? sanitize_text_field(wp_unslash($_POST['image_hover_effect_four'])) : "none";
-						$light_box           = isset($_POST['light-box']) ? sanitize_text_field(wp_unslash($_POST['light-box'])) : "0";
+						$thumbnail_order     = isset($_POST['thumbnail_order']) ? sanitize_text_field(wp_unslash($_POST['thumbnail_order'])) : "ASC";
+						$image_hover_effect_type = isset($_POST['image_hover_effect_type']) ? sanitize_text_field(wp_unslash($_POST['image_hover_effect_type'])) : "sg";
+						$image_hover_effect_four = isset($_POST['image_hover_effect_four']) ? sanitize_text_field(wp_unslash($_POST['image_hover_effect_four'])) : "hvr-grow-shadow";
+						$light_box           = isset($_POST['light-box']) ? sanitize_text_field(wp_unslash($_POST['light-box'])) : "1";
 						$show_lightbox_loop = isset($_POST['show_lightbox_loop']) ? absint($_POST['show_lightbox_loop']) : 1;
 
 
@@ -437,6 +437,7 @@ if (!class_exists('New_Image_Gallery')) {
 							'slide-alt' => $image_alt,
 							'gal_thumb_size' => $gal_thumb_size,
 							'no_spacing' => $no_spacing,
+							'img_title' => $img_title,
 							'thumbnail_order' => $thumbnail_order,
 							'image_hover_effect_type' => $image_hover_effect_type,
 							'image_hover_effect_four' => $image_hover_effect_four,
