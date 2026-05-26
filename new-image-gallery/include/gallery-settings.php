@@ -385,8 +385,8 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 					</div>
 					<div class="ig-pro-feature-card">
 						<div class="ig-pro-icon"><span class="dashicons dashicons-desktop"></span></div>
-						<h3><?php esc_html_e('8-Column Ultra-Wide Support', 'new-image-gallery'); ?></h3>
-						<p><?php esc_html_e('Unlock the missing 5, 7, and 8 column options for perfect balance on high-resolution and ultra-wide displays.', 'new-image-gallery'); ?></p>
+						<h3><?php esc_html_e('16-Column Ultra-Wide Support', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Unlock the missing 5, 7, and 8 to 16 column options for perfect balance on high-resolution and ultra-wide displays.', 'new-image-gallery'); ?></p>
 					</div>
 					<div class="ig-pro-feature-card">
 						<div class="ig-pro-icon"><span class="dashicons dashicons-forms"></span></div>
@@ -415,7 +415,7 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 							<tr>
 								<td><?php esc_html_e('Available Columns', 'new-image-gallery'); ?></td>
 								<td><?php esc_html_e('1, 2, 3, 4, 6 Columns', 'new-image-gallery'); ?></td>
-								<td><?php esc_html_e('1, 2, 3, 4, 5, 6, 7, 8 Columns', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('1 to 16 Columns', 'new-image-gallery'); ?></td>
 							</tr>
 							<tr>
 								<td><?php esc_html_e('Layout Modes', 'new-image-gallery'); ?></td>
@@ -424,6 +424,11 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 							</tr>
 							<tr>
 								<td><?php esc_html_e('AJAX Load More', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Gallery Loading Icon', 'new-image-gallery'); ?></td>
 								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
 								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
 							</tr>

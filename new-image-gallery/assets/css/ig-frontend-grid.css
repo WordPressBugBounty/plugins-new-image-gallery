@@ -182,7 +182,7 @@
    Optimized Hover Effects (Ported from hover.css)
    ======================================== */
 .hvr-glow, .hvr-grow-shadow, .hvr-box-shadow-outset, .hvr-float-shadow {
-    display: inline-block;
+    /*display: inline-block;*/
     vertical-align: middle;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);

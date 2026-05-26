@@ -3,8 +3,8 @@ Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkh
 Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 5.2
-Tested up to: 6.9
-Stable tag: 2.0.2
+Tested up to: 7.0
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,10 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 8. Gallery with Load More Button in Pro
 
 == Changelog ==
+
+= 2.0.3 =
+* Date: 26 May 2026
+* Fixed Columns width issue.
 
 = 2.0.2 =
 * Date: 16 May 2026
