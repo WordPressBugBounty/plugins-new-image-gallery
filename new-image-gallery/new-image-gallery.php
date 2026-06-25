@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 Plugin Name: Image Gallery
 Plugin URI: http://awplife.com/
 Description: A Responsive Simple Beautiful Easy Powerful WordPress Gallery Plugin With Masonry Layout.
-Version: 2.0.3
+Version: 2.0.4
 Author: A WP Life
 Author URI: http://awplife.com/
 License: GPLv2 or later
@@ -81,7 +81,7 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			//Plugin Version
-			define('IG_PLUGIN_VER', '2.0.3');
+			define('IG_PLUGIN_VER', '2.0.4');
 
 			//Plugin Slug
 			define('IG_PLUGIN_SLUG', 'image_gallery');
@@ -521,4 +521,6 @@ if (!class_exists('New_Image_Gallery')) {
 	$ig_gallery_object = new New_Image_Gallery();
 } // end of class exists
 
+require_once(plugin_dir_path(__FILE__) . 'include/elementor-widget.php');
+require_once(plugin_dir_path(__FILE__) . 'include/gutenberg-block.php');
 ?>

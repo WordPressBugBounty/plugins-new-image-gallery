@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ Image Gallery helps you create stunning photo galleries on your WordPress site w
 
 With grid and masonry options, your galleries adapt to any screen size automatically. The built-in lightbox opens images in a sleek overlay, giving visitors a focused viewing experience. You can add unlimited images to each gallery and create as many galleries as your site needs.
 
-https://www.youtube.com/watch?v=dNou6i8d-l4&t=9s
+https://www.youtube.com/watch?v=HjiDF4x-kVA
 
 = How It Works =
 
@@ -57,30 +57,44 @@ Choose from 2 to 6 columns to control how many images appear per row. The layout
 * Drag and drop image ordering
 * Image alt text for accessibility
 * Custom spacing and borders
+* Gutenberg block support
+* Elementor widget support
 
 = Pro Version Features =
 
 Upgrade to the Pro version for additional capabilities:
 
 * All free features included
-* 6 lightbox styles (BlueImp, PopTrox, Viewer, LD, and more)
-* 30 hover effects for image thumbnails
-* 2D transition animations
-* Link gallery - add custom URLs to images
-* Advanced sorting (ascending, descending, shuffle)
-* Load more button for large galleries
-* Custom CSS for further styling
-* Thumbnail size and quality controls
+* Global Settings Page - Site-wide controls for Lazy Load, WebP conversion, Skeleton Loading, Loading animations, and complete Backup Import/Export
+* Gallery Loading Animations - Shimmering Skeleton placeholders and modern loading icons (Spinner, Pulse, Dots) with color selection
+* Custom Profile Header - Standard, Centered, and Compact mock social branding header layouts
+* Masonry, Grid, and Circle layouts - Uniform grid with multiple aspect ratios (1:1, 4:3, 16:9, etc.)
+* 6 premium lightbox scripts (G Lightbox, PhotoSwipe v4, Modal, Viewer, Blue Imp, and LD Lightbox)
+* Lightbox Image Descriptions - Full support for rendering image content summaries and captions inside the lightbox popup
+* Flexible Title Positioning - Choose to display image titles precisely over the hover overlay or clearly below the image card
+* AJAX Load More Pagination - Smooth infinite loading with Solid, Outline, Glass, Neon, and Gradient button styles
+* Advanced Border & Spacing - Adjust corner radius (0-100px), border thickness, border opacity, and card colors
+* Custom Redirection Links - Add custom redirect URLs to individual slides with same/new tab targets
+* Up to 16 columns layout support on high-resolution widescreen screens
+* Duplicate/Clone Gallery - Copy any gallery settings and slides instantly with one click
+* Custom CSS editor - Override frontend stylesheet properties directly in the admin dashboard
 * Priority email support
 
 = More Pro Version Demos =
 
-* [Premium Gallery](https://awplife.com/demo/image-gallery-premium/image-gallery-premium/)
-* [Masonry Layout](https://awplife.com/demo/image-gallery-premium/masonry-gallery-2/)
+* [Masonry Layout](https://awplife.com/demo/image-gallery-premium/image-gallery-premium/)
+* [Same Grid Layout](https://awplife.com/demo/image-gallery-premium/uniform-grid/)
+* [Circle Layout](https://awplife.com/demo/image-gallery-premium/circle/)
+* [Load More](https://awplife.com/demo/image-gallery-premium/load-more/)
+* [Custom Profile Header](https://awplife.com/demo/image-gallery-premium/instagram-type-gallery/)
+* [GlightBox](https://awplife.com/demo/image-gallery-premium/pop-trox-light-box-gallery/)
+* [PhotoSwipe](https://awplife.com/demo/image-gallery-premium/photo-swipe-gallery/)
+* [Border Layouts](https://awplife.com/demo/image-gallery-premium/bordar-settings/)
+* [Title Positions](https://awplife.com/demo/image-gallery-premium/title-display-position/)
 * [BlueImp Lightbox](https://awplife.com/demo/image-gallery-premium/blue-imp-light-box-gallery/)
 * [PopTrox Lightbox](https://awplife.com/demo/image-gallery-premium/pop-trox-light-box-gallery/)
 * [Viewer Lightbox](https://awplife.com/demo/image-gallery-premium/viewer-light-box-gallery/)
-* [No Spacing Layout](https://awplife.com/demo/image-gallery-premium/hide-image-spacing/)
+* [Spacing Layouts](https://awplife.com/demo/image-gallery-premium/gallery-spacing/)
 
 == Installation ==
 
@@ -143,16 +157,24 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Screenshots ==
 
-1. Image Gallery On Website
-2. Grid Gallery Without Spacing
+1. Add Image Tab
+2. Layout Tab
 3. Image Hover Effects
-4. Image Gallery with Multiple Columns Example
-5. Image Gallery Premium Demo
-6. Masonry Gallery in Pro Demo
-7. Lightbox Preview in Pro Demo
-8. Gallery with Load More Button in Pro
+4. Title, Sapcing and 4 Colums
+5. Sapcing and 3 Colums
+6. No Sapcing and 3 Colums
+7. Title, No Sapcing and 4 Colums
 
 == Changelog ==
+
+= 2.0.4 =
+* Date: 25 June 2026
+* Added Gutenberg Block support to easily select and render galleries.
+* Added Elementor Widget support to embed galleries via Elementor Page Builder.
+* Added Right Click Protection integration in the Layout & Design settings to protect graphics.
+* Updated Upgrade to Pro tab with the latest premium layout aspect ratios, Custom Profile Headers, and Pagination button presets.
+* Added live demo button and sidebar quick links (Buy Pro, Ratings, Live Demo) to the Mastery Guide.
+* Documented Right Click Protection card details in the Mastery Guide.
 
 = 2.0.3 =
 * Date: 26 May 2026
@@ -212,6 +234,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.6.2
 
 == Upgrade Notice ==
+
+= 2.0.4 =
+Added Right Click Protection integration, updated Upgrade to Pro options, and added quick action links in the Mastery Guide. Recommended for all users.
 
 = 2.0.2 =
 Fixed issues with Thumbnail Title saving and Random Order functionality. Recommended for all users.

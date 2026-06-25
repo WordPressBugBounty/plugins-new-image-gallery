@@ -299,6 +299,57 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 					</div>
 				</div>
             </div>
+
+            <!-- Group 5: Right Click Protection -->
+            <div class="awl-ig-card ig-card-compact">
+				<div class="awl-ig-setting-row">
+					<div class="awl-ig-setting-label">
+						<h4><span class="dashicons dashicons-lock"></span> <?php esc_html_e('Right Click Protection', 'new-image-gallery'); ?></h4>
+						<p><?php esc_html_e('If you want to disable right click and image dragging on your site, we have a dedicated plugin for it. Just install and use it.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="awl-ig-setting-field">
+                        <?php
+                        $rcb_plugin = 'right-click-disable-or-ban/right-click-disable-or-ban.php';
+                        if ( ! function_exists( 'is_plugin_active' ) ) {
+                            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+                        }
+                        $is_rcb_installed = file_exists(WP_PLUGIN_DIR . '/' . $rcb_plugin);
+                        $is_rcb_active = $is_rcb_installed && is_plugin_active($rcb_plugin);
+
+                        if ($is_rcb_active) : ?>
+                            <div class="rcb-status-container" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+                                <div style="display: inline-flex; align-items: center; gap: 8px; background: #e0f2fe; color: #0369a1; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">
+                                    <span class="dashicons dashicons-shield" style="font-size: 16px; width: 16px; height: 16px; margin: 0;"></span>
+                                    <?php esc_html_e('Active & Protecting', 'new-image-gallery'); ?>
+                                </div>
+                                <a href="<?php echo esc_url(admin_url('admin.php?page=right-click-disable-or-ban-free')); ?>" class="ig-btn ig-btn-secondary">
+                                    <span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e('Configure Protection Settings', 'new-image-gallery'); ?>
+                                </a>
+                            </div>
+                        <?php elseif ($is_rcb_installed) : ?>
+                            <div class="rcb-status-container" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+                                <div style="display: inline-flex; align-items: center; gap: 8px; background: #ffedd5; color: #c2410c; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">
+                                    <span class="dashicons dashicons-warning" style="font-size: 16px; width: 16px; height: 16px; margin: 0;"></span>
+                                    <?php esc_html_e('Installed (Inactive)', 'new-image-gallery'); ?>
+                                </div>
+                                <a href="<?php echo esc_url(wp_nonce_url(self_admin_url('plugins.php?action=activate&plugin=' . $rcb_plugin), 'activate-plugin_' . $rcb_plugin)); ?>" class="ig-btn ig-btn-primary">
+                                    <span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('Activate Right Click Ban', 'new-image-gallery'); ?>
+                                </a>
+                            </div>
+                        <?php else : ?>
+                            <div class="rcb-status-container" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+                                <div style="display: inline-flex; align-items: center; gap: 8px; background: #f1f5f9; color: #475569; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">
+                                    <span class="dashicons dashicons-info" style="font-size: 16px; width: 16px; height: 16px; margin: 0;"></span>
+                                    <?php esc_html_e('Recommended Plugin', 'new-image-gallery'); ?>
+                                </div>
+                                <a href="<?php echo esc_url(wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=right-click-disable-or-ban'), 'install-plugin_right-click-disable-or-ban')); ?>" class="ig-btn ig-btn-primary">
+                                    <span class="dashicons dashicons-download"></span> <?php esc_html_e('Install Free Right Click Ban Plugin', 'new-image-gallery'); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+					</div>
+				</div>
+            </div>
 		</div>
 
 		<!-- Tab 3: Lightbox -->
@@ -358,10 +409,13 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 					<h2><?php esc_html_e('Experience the Best with Pro Version', 'new-image-gallery'); ?></h2>
 					<p><?php esc_html_e('Take your image galleries to the next level with advanced features, powerful tools, and priority support.', 'new-image-gallery'); ?></p>
 					
-					<!-- Top Buy Button -->
-					<div class="ig-pro-top-cta" style="margin-top: 25px; text-align: center;">
+					<!-- Top Buy & Demo Buttons -->
+					<div class="ig-pro-top-cta" style="margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
 						<a href="https://awplife.com/wordpress-plugins/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-premium lg">
 							<span class="dashicons dashicons-cart"></span> <?php esc_html_e('Get the Pro Version Now', 'new-image-gallery'); ?>
+						</a>
+						<a href="https://awplife.com/demo/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-secondary lg">
+							<span class="dashicons dashicons-welcome-view-site"></span> <?php esc_html_e('Check Live Demo', 'new-image-gallery'); ?>
 						</a>
 					</div>
 				</div>
@@ -376,12 +430,32 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 					<div class="ig-pro-feature-card">
 						<div class="ig-pro-icon"><span class="dashicons dashicons-clock"></span></div>
 						<h3><?php esc_html_e('AJAX Load More', 'new-image-gallery'); ?></h3>
-						<p><?php esc_html_e('Enhance performance with high-speed AJAX pagination, featuring stunning professional button presets.', 'new-image-gallery'); ?></p>
+						<p><?php esc_html_e('Enhance performance with high-speed AJAX pagination, featuring stunning professional Solid, Outline, Glass, Neon, and Gradient button presets.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-images-alt2"></span></div>
+						<h3><?php esc_html_e('WebP Optimization Engine', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Automatically convert and serve gallery images in WebP format site-wide for significantly faster page load speeds and bandwidth optimization.', 'new-image-gallery'); ?></p>
 					</div>
 					<div class="ig-pro-feature-card">
 						<div class="ig-pro-icon"><span class="dashicons dashicons-layout"></span></div>
-						<h3><?php esc_html_e('Premium Grid & Circle Layout', 'new-image-gallery'); ?></h3>
-						<p><?php esc_html_e('Transform your gallery into a unique circular grid with professional spacing controls.', 'new-image-gallery'); ?></p>
+						<h3><?php esc_html_e('Masonry, Grid & Circle Layouts', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Unlock the uniform grid and circle layouts. Grid mode includes 6 aspect ratio presets (1:1 Square, 4:3 Landscape, 16:9 Cinema, etc.).', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-admin-users"></span></div>
+						<h3><?php esc_html_e('Custom Profile Header', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Display standard, centered, or compact branding headers on top of your gallery with avatar upload, bio tag editor, and statistics.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-welcome-view-site"></span></div>
+						<h3><?php esc_html_e('6 Premium Lightbox Scripts', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Integrate G Lightbox, PhotoSwipe v4, Modal, Viewer, Blue Imp, and LD Lightbox. Show title, description, and configure navigation loops.', 'new-image-gallery'); ?></p>
+					</div>
+					<div class="ig-pro-feature-card">
+						<div class="ig-pro-icon"><span class="dashicons dashicons-admin-links"></span></div>
+						<h3><?php esc_html_e('Custom Slide Link URLs', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Attach custom hyperlinks to individual images to redirect visitors to specific posts, pages, or external URLs with tab target control.', 'new-image-gallery'); ?></p>
 					</div>
 					<div class="ig-pro-feature-card">
 						<div class="ig-pro-icon"><span class="dashicons dashicons-desktop"></span></div>
@@ -390,13 +464,8 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 					</div>
 					<div class="ig-pro-feature-card">
 						<div class="ig-pro-icon"><span class="dashicons dashicons-forms"></span></div>
-						<h3><?php esc_html_e('Advanced Border & Spacing Control', 'new-image-gallery'); ?></h3>
-						<p><?php esc_html_e('Customize border thickness, Color and spacing, glassmorphism card effect.', 'new-image-gallery'); ?></p>
-					</div>
-					<div class="ig-pro-feature-card">
-						<div class="ig-pro-icon"><span class="dashicons dashicons-align-center"></span></div>
-						<h3><?php esc_html_e('Flexible Title Positioning', 'new-image-gallery'); ?></h3>
-						<p><?php esc_html_e('Choose where to display image titles: precisely over the hover overlay or clearly below the image card.', 'new-image-gallery'); ?></p>
+						<h3><?php esc_html_e('Advanced Border & Spacing', 'new-image-gallery'); ?></h3>
+						<p><?php esc_html_e('Fine-tune card aesthetics. Adjust corner radius (0-100px), card background colors, border thickness, border opacity, and shadow effects.', 'new-image-gallery'); ?></p>
 					</div>
 				</div>
 
@@ -423,9 +492,14 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 								<td><?php esc_html_e('Masonry, Grid, Circle', 'new-image-gallery'); ?></td>
 							</tr>
 							<tr>
+								<td><?php esc_html_e('Grid Image Aspect Ratios', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><?php esc_html_e('Yes (6 Presets)', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
 								<td><?php esc_html_e('AJAX Load More', 'new-image-gallery'); ?></td>
 								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
-								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span> <?php esc_html_e('Yes (5 Button Style Presets)', 'new-image-gallery'); ?></td>
 							</tr>
 							<tr>
 								<td><?php esc_html_e('Gallery Loading Icon', 'new-image-gallery'); ?></td>
@@ -441,7 +515,27 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 							<tr>
 								<td><?php esc_html_e('Advanced Border & Spacing Control', 'new-image-gallery'); ?></td>
 								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span> <?php esc_html_e('Yes (Thickness, Radius & Card Colors)', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Instagram Style Profile Header', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><?php esc_html_e('Yes (3 Layouts, Bio Editor & Statistics)', 'new-image-gallery'); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Custom Slide Link URLs', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
 								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Custom CSS Field', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e('Global Settings Page', 'new-image-gallery'); ?></td>
+								<td><span class="dashicons dashicons-no-alt" style="color: #ef4444;"></span></td>
+								<td><span class="dashicons dashicons-yes" style="color: #10b981;"></span> <?php esc_html_e('Yes (Lazy Load, WebP, Skeleton, Loaders, Backup Import/Export)', 'new-image-gallery'); ?></td>
 							</tr>
 							<tr>
 								<td><?php esc_html_e('Image Order', 'new-image-gallery'); ?></td>
@@ -451,12 +545,12 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 							<tr>
 								<td><?php esc_html_e('Image Hover Effects', 'new-image-gallery'); ?></td>
 								<td><?php esc_html_e('Basic', 'new-image-gallery'); ?></td>
-								<td><?php esc_html_e('Advance', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('Advance (2D, Shadow, Glow & Overlay)', 'new-image-gallery'); ?></td>
 							</tr>
 							<tr>
 								<td><?php esc_html_e('Lightbox Scripts', 'new-image-gallery'); ?></td>
 								<td><?php esc_html_e('1 Type', 'new-image-gallery'); ?></td>
-								<td><?php esc_html_e('6 Types', 'new-image-gallery'); ?></td>
+								<td><?php esc_html_e('6 Types (G Lightbox, PhotoSwipe, etc.)', 'new-image-gallery'); ?></td>
 							</tr>
 							<tr>
 								<td><?php esc_html_e('Lightbox Image', 'new-image-gallery'); ?></td>
@@ -478,11 +572,16 @@ $col_xs_val = ig_get_column_count($gallery_settings['col_phones'], 1);
 				</div>
 
 				<!-- Footer CTA -->
-				<div class="ig-pro-cta">
-					<a href="https://awplife.com/wordpress-plugins/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-premium lg">
-						<span class="dashicons dashicons-cart"></span> <?php esc_html_e('Grab Image Gallery Pro Now!', 'new-image-gallery'); ?>
-					</a>
-					<p><?php esc_html_e('One-time payment. Lifetime updates. 100% Satisfaction.', 'new-image-gallery'); ?></p>
+				<div class="ig-pro-cta" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+					<div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+						<a href="https://awplife.com/wordpress-plugins/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-premium lg">
+							<span class="dashicons dashicons-cart"></span> <?php esc_html_e('Grab Image Gallery Pro Now!', 'new-image-gallery'); ?>
+						</a>
+						<a href="https://awplife.com/demo/image-gallery-premium/" target="_blank" class="ig-btn ig-btn-secondary lg">
+							<span class="dashicons dashicons-welcome-view-site"></span> <?php esc_html_e('Check Live Demo', 'new-image-gallery'); ?>
+						</a>
+					</div>
+					<p style="margin: 0;"><?php esc_html_e('One-time payment. Lifetime updates. 100% Satisfaction.', 'new-image-gallery'); ?></p>
 				</div>
 			</div>
 		</div>

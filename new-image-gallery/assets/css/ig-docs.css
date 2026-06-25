@@ -93,3 +93,50 @@
 .igp-code-sample code { color: #818cf8; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 14px; }
 
 .igp-content-footer { margin-top: 100px; padding-top: 30px; border-top: 1px solid #f1f5f9; text-align: center; color: #94a3b8; font-size: 12px; }
+
+/* Sidebar Action Buttons */
+.igp-sidebar-actions {
+    padding: 30px 20px 0 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.igp-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 13px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+.igp-btn-premium {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+}
+.igp-btn-premium:hover {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(217, 119, 6, 0.3);
+}
+.igp-btn-demo, .igp-btn-rating {
+    background: rgba(255,255,255,0.06);
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-weight: 500;
+}
+.igp-btn-demo:hover, .igp-btn-rating:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+.igp-btn-rating .dashicons {
+    color: #fbbf24;
+}

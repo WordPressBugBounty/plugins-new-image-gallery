@@ -18,6 +18,18 @@ wp_enqueue_style('awl-ig-docs-css');
 
             <li><a href="#section-deployment"><span class="dashicons dashicons-shortcode"></span> <?php esc_html_e('Shortcode Deployment', 'new-image-gallery'); ?></a></li>
         </ul>
+
+        <div class="igp-sidebar-actions">
+            <a href="https://awplife.com/wordpress-plugins/image-gallery-premium/" target="_blank" class="igp-action-btn igp-btn-premium">
+                <span class="dashicons dashicons-cart"></span> <?php esc_html_e('Buy Pro Version', 'new-image-gallery'); ?>
+            </a>
+            <a href="https://awplife.com/demo/image-gallery-premium/" target="_blank" class="igp-action-btn igp-btn-demo">
+                <span class="dashicons dashicons-welcome-view-site"></span> <?php esc_html_e('Live Demo', 'new-image-gallery'); ?>
+            </a>
+            <a href="https://wordpress.org/support/plugin/new-image-gallery/reviews/" target="_blank" class="igp-action-btn igp-btn-rating">
+                <span class="dashicons dashicons-star-filled"></span> <?php esc_html_e('Rate 5 Stars', 'new-image-gallery'); ?>
+            </a>
+        </div>
     </div>
 
     <div class="igp-docs-content">
@@ -114,6 +126,12 @@ wp_enqueue_style('awl-ig-docs-css');
                         </ul>
                     </div>
                 </div>
+
+                <h3 style="margin-top:40px;"><?php esc_html_e('Right Click Protection', 'new-image-gallery'); ?></h3>
+                <p><?php esc_html_e('Enforce security against image downloading by utilizing our recommended integration:', 'new-image-gallery'); ?></p>
+                <ul class="igp-bullet-list">
+                    <li><strong><?php esc_html_e('Right Click Protection Card:', 'new-image-gallery'); ?></strong> <?php esc_html_e('Uses real-time system file checks to look for the "Right Click Disable OR Ban" plugin. Click to install, activate, or directly configure right-click rules to restrict users from downloading your graphics.', 'new-image-gallery'); ?></li>
+                </ul>
             </div>
         </section>
 
