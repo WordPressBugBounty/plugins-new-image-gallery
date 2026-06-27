@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,10 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Changelog ==
 
+= 2.0.6 =
+* Date: 27 June 2026
+* Fixed admin menu active state highlighting for Docs page when multiple gallery plugins are active by assigning a unique menu slug (`ig-doc-page`).
+
 = 2.0.5 =
 * Date: 27 June 2026
 * Fixed title and overlay styling on frontend thumbnail grids to match modern design system.
@@ -241,6 +245,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.6.2
 
 == Upgrade Notice ==
+
+= 2.0.6 =
+Fixed admin menu active state highlighting for Docs page when multiple gallery plugins are active. Recommended for all users.
 
 = 2.0.5 =
 Fixed title CSS, improved Right Click Ban button hover states, and added seamless Premium plugin co-existence protection. Recommended for all users.

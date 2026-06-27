@@ -35,7 +35,7 @@ if ( ig_check_premium_active() ) {
 Plugin Name: Image Gallery
 Plugin URI: http://awplife.com/
 Description: A Responsive Simple Beautiful Easy Powerful WordPress Gallery Plugin With Masonry Layout.
-Version: 2.0.5
+Version: 2.0.6
 Author: A WP Life
 Author URI: http://awplife.com/
 License: GPLv2 or later
@@ -108,7 +108,7 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			//Plugin Version
-			if (!defined('IG_PLUGIN_VER')) define('IG_PLUGIN_VER', '2.0.5');
+			if (!defined('IG_PLUGIN_VER')) define('IG_PLUGIN_VER', '2.0.6');
 
 			//Plugin Slug
 			if (!defined('IG_PLUGIN_SLUG')) define('IG_PLUGIN_SLUG', 'image_gallery');
@@ -226,7 +226,7 @@ if (!class_exists('New_Image_Gallery')) {
 			}
 			
 			// Specific docs styling if active
-			if (isset($_GET['page']) && $_GET['page'] === 'sr-doc-page') {
+			if (isset($_GET['page']) && $_GET['page'] === 'ig-doc-page') {
 				wp_enqueue_style('ig-admin-docs-css', IG_PLUGIN_URL . 'assets/css/ig-docs.css', array(), IG_PLUGIN_VER);
 			}
 
@@ -247,9 +247,9 @@ if (!class_exists('New_Image_Gallery')) {
 		 */
 		public function _srgallery_menu()
 		{
-			add_submenu_page('edit.php?post_type=' . IG_PLUGIN_SLUG, __('Docs', 'new-image-gallery'), __('Docs', 'new-image-gallery'), 'administrator', 'sr-doc-page', array($this, '_ig_doc_page'));
-			add_submenu_page('edit.php?post_type=' . IG_PLUGIN_SLUG, __('Our Plugins', 'new-image-gallery'), __('Our Plugins', 'new-image-gallery'), 'administrator', 'ig-our-plugins', array($this, '_ig_our_plugins_page'));
-			add_submenu_page('edit.php?post_type=' . IG_PLUGIN_SLUG, __('Our Themes', 'new-image-gallery'), __('Our Themes', 'new-image-gallery'), 'administrator', 'ig-our-themes', array($this, '_ig_our_themes_page'));
+			add_submenu_page('edit.php?post_type=' . IG_PLUGIN_SLUG, __('Docs', 'new-image-gallery'), __('Docs', 'new-image-gallery'), 'manage_options', 'ig-doc-page', array($this, '_ig_doc_page'));
+			add_submenu_page('edit.php?post_type=' . IG_PLUGIN_SLUG, __('Our Plugins', 'new-image-gallery'), __('Our Plugins', 'new-image-gallery'), 'manage_options', 'ig-our-plugins', array($this, '_ig_our_plugins_page'));
+			add_submenu_page('edit.php?post_type=' . IG_PLUGIN_SLUG, __('Our Themes', 'new-image-gallery'), __('Our Themes', 'new-image-gallery'), 'manage_options', 'ig-our-themes', array($this, '_ig_our_themes_page'));
 		}
 
 
