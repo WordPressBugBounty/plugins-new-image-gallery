@@ -314,7 +314,7 @@
     cursor: pointer;
     transition: var(--ig-transition);
     border: 1px solid transparent;
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1;
 }
 
@@ -325,36 +325,45 @@
 }
 
 .ig-btn-primary {
-    background: var(--ig-primary);
-    color: #fff;
+    background: var(--ig-primary) !important;
+    color: #fff !important;
 }
 
-.ig-btn-primary:hover {
-    background: var(--ig-primary-hover);
+.ig-btn-primary:hover,
+.ig-btn-primary:focus {
+    background: var(--ig-primary-hover) !important;
+    color: #fff !important;
     transform: translateY(-1px);
     box-shadow: var(--ig-shadow);
 }
 
 .ig-btn-secondary {
-    background: #fff;
-    border-color: var(--ig-border);
-    color: var(--ig-text);
+    background: #fff !important;
+    border-color: var(--ig-border) !important;
+    color: var(--ig-text) !important;
+    box-shadow: var(--ig-shadow-sm) !important;
 }
 
-.ig-btn-secondary:hover {
-    background: #f8fafc;
-    border-color: var(--ig-primary);
-    color: var(--ig-primary);
+.ig-btn-secondary:hover,
+.ig-btn-secondary:focus {
+    background: #f8fafc !important;
+    border-color: var(--ig-primary) !important;
+    color: var(--ig-primary) !important;
+    box-shadow: var(--ig-shadow) !important;
 }
 
 .ig-btn-danger {
-    background: #fee2e2;
-    color: #ef4444;
+    background: #fee2e2 !important;
+    color: #ef4444 !important;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.1) !important;
 }
 
-.ig-btn-danger:hover {
-    background: #ef4444;
-    color: #fff;
+.ig-btn-danger:hover,
+.ig-btn-danger:focus {
+    background: #ef4444 !important;
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3) !important;
 }
 
 .ig-btn-premium {
@@ -364,7 +373,8 @@
     box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
 }
 
-.ig-btn-premium:hover {
+.ig-btn-premium:hover,
+.ig-btn-premium:focus {
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(245, 158, 11, 0.5);
@@ -769,7 +779,7 @@
     cursor: pointer;
     transition: var(--ig-transition);
     border: 1px solid transparent;
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1;
 }
 
@@ -782,29 +792,46 @@
     justify-content: center;
 }
 
-.ig-btn-secondary {
-    background: #ffffff;
-    border-color: var(--ig-border);
-    color: var(--ig-text);
-    box-shadow: var(--ig-shadow-sm);
+.ig-btn-primary {
+    background: var(--ig-primary) !important;
+    color: #fff !important;
 }
 
-.ig-btn-secondary:hover {
-    border-color: var(--ig-primary);
-    color: var(--ig-primary);
-    background: #f8fafc;
+.ig-btn-primary:hover,
+.ig-btn-primary:focus {
+    background: var(--ig-primary-hover) !important;
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: var(--ig-shadow);
+}
+
+.ig-btn-secondary {
+    background: #ffffff !important;
+    border-color: var(--ig-border) !important;
+    color: var(--ig-text) !important;
+    box-shadow: var(--ig-shadow-sm) !important;
+}
+
+.ig-btn-secondary:hover,
+.ig-btn-secondary:focus {
+    border-color: var(--ig-primary) !important;
+    color: var(--ig-primary) !important;
+    background: #f8fafc !important;
+    box-shadow: var(--ig-shadow) !important;
 }
 
 .ig-btn-danger {
-    background: #ef4444;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+    background: #fee2e2 !important;
+    color: #ef4444 !important;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.1) !important;
 }
 
-.ig-btn-danger:hover {
-    background: #dc2626;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3);
+.ig-btn-danger:hover,
+.ig-btn-danger:focus {
+    background: #ef4444 !important;
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3) !important;
 }
 
 .ig-button-group {

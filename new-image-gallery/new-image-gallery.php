@@ -2,13 +2,40 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Priority Guard: If Image Gallery Premium is active, allow both plugins to be active in WordPress
+ * while handing full execution priority to the Premium version without causing headers already sent or constant errors.
+ */
+if ( ! function_exists( 'ig_check_premium_active' ) ) {
+	function ig_check_premium_active() {
+		if ( defined( 'IGP_PLUGIN_VER' ) ) {
+			return true;
+		}
+		$active_plugins = (array) get_option( 'active_plugins', array() );
+		if ( is_multisite() ) {
+			$network_active = (array) get_site_option( 'active_sitewide_plugins', array() );
+			$active_plugins = array_merge( $active_plugins, array_keys( $network_active ) );
+		}
+		foreach ( $active_plugins as $plugin ) {
+			if ( strpos( $plugin, 'image-gallery-premium.php' ) !== false ) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+if ( ig_check_premium_active() ) {
+	return;
+}
+
+/**
  * @package Image Gallery
  */
 /*
 Plugin Name: Image Gallery
 Plugin URI: http://awplife.com/
 Description: A Responsive Simple Beautiful Easy Powerful WordPress Gallery Plugin With Masonry Layout.
-Version: 2.0.4
+Version: 2.0.5
 Author: A WP Life
 Author URI: http://awplife.com/
 License: GPLv2 or later
@@ -81,16 +108,16 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			//Plugin Version
-			define('IG_PLUGIN_VER', '2.0.4');
+			if (!defined('IG_PLUGIN_VER')) define('IG_PLUGIN_VER', '2.0.5');
 
 			//Plugin Slug
-			define('IG_PLUGIN_SLUG', 'image_gallery');
+			if (!defined('IG_PLUGIN_SLUG')) define('IG_PLUGIN_SLUG', 'image_gallery');
 
 			//Plugin Directory Path
-			define('IG_PLUGIN_DIR', plugin_dir_path(__FILE__));
+			if (!defined('IG_PLUGIN_DIR')) define('IG_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 			//Plugin Directory URL
-			define('IG_PLUGIN_URL', plugin_dir_url(__FILE__));
+			if (!defined('IG_PLUGIN_URL')) define('IG_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 		} // end of constructor function
 

@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,15 +157,22 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Screenshots ==
 
-1. Add Image Tab
-2. Layout Tab
+1. Image Gallery On Website
+2. Grid Gallery Without Spacing
 3. Image Hover Effects
-4. Title, Sapcing and 4 Colums
-5. Sapcing and 3 Colums
-6. No Sapcing and 3 Colums
-7. Title, No Sapcing and 4 Colums
+4. Image Gallery with Multiple Columns Example
+5. Image Gallery Premium Demo
+6. Masonry Gallery in Pro Demo
+7. Lightbox Preview in Pro Demo
+8. Gallery with Load More Button in Pro
 
 == Changelog ==
+
+= 2.0.5 =
+* Date: 27 June 2026
+* Fixed title and overlay styling on frontend thumbnail grids to match modern design system.
+* Improved Right Click Ban integration button hover and focus states in admin settings.
+* Added seamless Premium plugin co-existence protection allowing Free and Pro versions to be active simultaneously without headers or constant errors.
 
 = 2.0.4 =
 * Date: 25 June 2026
@@ -234,6 +241,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.6.2
 
 == Upgrade Notice ==
+
+= 2.0.5 =
+Fixed title CSS, improved Right Click Ban button hover states, and added seamless Premium plugin co-existence protection. Recommended for all users.
 
 = 2.0.4 =
 Added Right Click Protection integration, updated Upgrade to Pro options, and added quick action links in the Mastery Guide. Recommended for all users.
