@@ -35,7 +35,7 @@ if ( ig_check_premium_active() ) {
 Plugin Name: Image Gallery
 Plugin URI: http://awplife.com/
 Description: A Responsive Simple Beautiful Easy Powerful WordPress Gallery Plugin With Masonry Layout.
-Version: 2.0.6
+Version: 2.0.7
 Author: A WP Life
 Author URI: http://awplife.com/
 License: GPLv2 or later
@@ -108,7 +108,7 @@ if (!class_exists('New_Image_Gallery')) {
 		protected function _constants()
 		{
 			//Plugin Version
-			if (!defined('IG_PLUGIN_VER')) define('IG_PLUGIN_VER', '2.0.6');
+			if (!defined('IG_PLUGIN_VER')) define('IG_PLUGIN_VER', '2.0.7');
 
 			//Plugin Slug
 			if (!defined('IG_PLUGIN_SLUG')) define('IG_PLUGIN_SLUG', 'image_gallery');

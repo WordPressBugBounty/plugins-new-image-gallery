@@ -4,7 +4,7 @@ Donate link: https://paypal.me/awplife
 Tags: image gallery, photo gallery, gallery, lightbox, masonry
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,13 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 
 == Changelog ==
 
+= 2.0.7 =
+* Date: 29 June 2026
+* Fixed Elementor widget styling and layout responsiveness in editor context; added automatic asset dependencies and inline JS initialization.
+* Resolved Elementor widget Fatal Error race condition on class loading by wrapping definition inside register hook.
+* Modernized Gutenberg block to use ServerSideRender live preview with clean gradient placeholder.
+* Fixed Gutenberg block selection, movement, and deletion by adding pointer-events fallbacks and flow-root display styling to prevent 0-height container collapse inside the editor.
+
 = 2.0.6 =
 * Date: 27 June 2026
 * Fixed admin menu active state highlighting for Docs page when multiple gallery plugins are active by assigning a unique menu slug (`ig-doc-page`).
@@ -245,6 +252,9 @@ In the gallery settings, look for the Column Layout option. Choose from 2, 3, 4,
 * Tested with WordPress 6.6.2
 
 == Upgrade Notice ==
+
+= 2.0.7 =
+Fixed Elementor widget Fatal Error class loading issue, added custom styling and script dependencies, and resolved Gutenberg block live preview rendering, selection, and deletion issues. Recommended for all users.
 
 = 2.0.6 =
 Fixed admin menu active state highlighting for Docs page when multiple gallery plugins are active. Recommended for all users.

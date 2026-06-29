@@ -9,18 +9,37 @@ function awl_image_gallery_register_gutenberg_block() {
     if (!function_exists('register_block_type')) {
         return;
     }
+
+    // Register all frontend styles/scripts on init so they're available for editor_style
+    wp_register_style('awl-ig-frontend-grid-css', IG_PLUGIN_URL . 'assets/css/ig-frontend-grid.css', array(), IG_PLUGIN_VER);
+    wp_register_style('awl-ld-lightbox-css', IG_PLUGIN_URL . 'include/lightbox/ld-lightbox/css/lightbox.css', array(), IG_PLUGIN_VER);
+
+    // Register editor-only override styles (force visibility in editor preview)
+    wp_register_style('awl-ig-block-editor-css', false);
+    wp_add_inline_style('awl-ig-block-editor-css', '
+        .ig-row { opacity: 1 !important; display: flow-root !important; }
+        .ig-row .single-image { opacity: 1 !important; animation: none !important; }
+    ');
     
     wp_register_script(
         'awl-ig-gutenberg-block-js',
         IG_PLUGIN_URL . 'assets/js/gutenberg-block.js',
-        array('wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-editor', 'jquery'),
+        array('wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'jquery'),
         IG_PLUGIN_VER,
         true
     );
 
     register_block_type('new-image-gallery/image-gallery-block', array(
+        'api_version'     => 3,
         'editor_script'   => 'awl-ig-gutenberg-block-js',
+        'editor_style'    => array('awl-ig-frontend-grid-css', 'awl-ld-lightbox-css', 'awl-ig-block-editor-css'),
         'render_callback' => 'awl_image_gallery_block_render',
+        'attributes'      => array(
+            'galleryId' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+        ),
     ));
 }
 
@@ -29,7 +48,7 @@ function awl_image_gallery_gutenberg_localize() {
     $all_galleries = get_posts(array(
         'post_type'      => 'image_gallery',
         'posts_per_page' => -1,
-        'post_status'    => 'publish',
+        'post_status'    => 'any',
         'orderby'        => 'title',
         'order'          => 'ASC',
     ));
@@ -51,6 +70,7 @@ function awl_image_gallery_gutenberg_localize() {
 
 /**
  * Gutenberg Block Render Callback
+ * Used for both frontend and ServerSideRender editor preview.
  */
 function awl_image_gallery_block_render($attributes) {
     $gallery_id = isset($attributes['galleryId']) ? (int)$attributes['galleryId'] : 0;
@@ -59,3 +79,4 @@ function awl_image_gallery_block_render($attributes) {
     }
     return '';
 }
+
